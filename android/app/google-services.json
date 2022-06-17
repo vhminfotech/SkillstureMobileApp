@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "78788864275",
+    "project_id": "skillsture",
+    "storage_bucket": "skillsture.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:78788864275:android:529b14adc38e527aae92e6",
+        "android_client_info": {
+          "package_name": "com.flutter.skillsture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "78788864275-301kkt9piluc0gd2rg8fmhfdhlil9j6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt5zCUjYrA_m1-lkmS3ljRwqyd3wksnaM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "78788864275-301kkt9piluc0gd2rg8fmhfdhlil9j6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

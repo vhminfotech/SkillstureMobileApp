@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">skillsture_project</string>
+    <string name="facebook_app_id">383383537160213</string>
+    <string name="fb_login_protocol_scheme">fb383383537160213</string>
+    <string name="facebook_client_token">ae4f464e56778f98db992e80692c8dd2</string>
+</resources>
