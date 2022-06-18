@@ -144,7 +144,17 @@ class Utils {
     }
   }
 
-  static String? isMobileNumberValid(BuildContext context, String value) {
+  static String? isMobileNumberValidation(BuildContext context, String value) {
+
+    if (value.isEmpty) {
+      return Localization.of(context)?.msgEnterMobile;
+    } else if (value.length < 8 || value.length > 14) {
+      return Localization.of(context)?.errorValidMobileNumber;
+    }
+    return null;
+  }
+
+  static String? isMobileValid(BuildContext context, String value) {
     const pattern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
     final regExp = RegExp(pattern);
     if (value.isEmpty || value.isEmpty) {

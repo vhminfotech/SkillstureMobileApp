@@ -32,7 +32,7 @@ class InstructorsListItem extends StatelessWidget {
               ),
               //Image.asset("assets/images/webinar_bg.png",),
               Padding(
-                padding: const EdgeInsets.only(top: 20,left: 10, right: 10),
+                padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -47,7 +47,8 @@ class InstructorsListItem extends StatelessWidget {
                       children: [
                         Text(
                           "1.3K",
-                          style: Utils.styleTextStyleInstructorTitleListTextField(),
+                          style: Utils
+                              .styleTextStyleInstructorTitleListTextField(),
                         ),
                         const SizedBox(
                           width: 5,
@@ -61,13 +62,20 @@ class InstructorsListItem extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        const SizedBox(height: 15, child: VerticalDivider(color: Colors.grey, thickness: 1,)),
+                        const SizedBox(
+                          height: 15,
+                          child: VerticalDivider(
+                            color: Colors.grey,
+                            thickness: 1,
+                          ),
+                        ),
                         const SizedBox(
                           width: 5,
                         ),
                         Text(
                           "4.7",
-                          style: Utils.styleTextStyleInstructorTitleListTextField(),
+                          style: Utils
+                              .styleTextStyleInstructorTitleListTextField(),
                         ),
                         const SizedBox(
                           width: 5,
@@ -83,8 +91,11 @@ class InstructorsListItem extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    Text("Creative Thinker, Graphic \nDesign, Product Design, \nAnimator, UI/U…",
-                    style: Utils.styleTextStyleInstructorListSubTitleTextField()),
+                    Text(
+                      "Creative Thinker, Graphic \nDesign, Product Design, \nAnimator, UI/U…",
+                      style:
+                          Utils.styleTextStyleInstructorListSubTitleTextField(),
+                    ),
                   ],
                 ),
               ),

@@ -36,12 +36,12 @@ dependencies:
   intl: ^0.17.0
   google_fonts: ^3.0.1
   graphql_flutter: ^5.1.0
-  intl_phone_field: ^3.1.0
   firebase_auth: ^3.3.19
   firebase_core: ^1.17.1
   google_sign_in: ^5.3.3
   flutter_facebook_auth: ^4.3.4+2
   flutter_rating_bar: ^4.0.1
+  country_code_picker: ^2.0.2
 
 
 

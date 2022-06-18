@@ -21,10 +21,10 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
   static const TextStyle optionStyleSelected = TextStyle(
-      fontSize: 8, fontFamily: "Comfortaa-Bold");
+      fontSize: 12, fontFamily: "Comfortaa-Bold");
 
   static const TextStyle optionStyle = TextStyle(
-      fontSize: 8, fontFamily: "Comfortaa-Medium");
+      fontSize: 12, fontFamily: "Comfortaa-Medium");
 
   void _onItemTapped(int index) {
     setState(() {
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage("assets/images/explore_unselected.png"),
-                size: 20,
+                size: 25,
               ),
               label: 'Explore',
             ),
@@ -65,21 +65,21 @@ class _HomePageState extends State<HomePage> {
                 AssetImage(
                   "assets/images/search_unselected.png",
                 ),
-                size: 20,
+                size: 25,
               ),
               label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage("assets/images/book_unselected.png"),
-                size: 20,
+                size: 25,
               ),
               label: 'My Learning',
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage("assets/images/more_unselected.png"),
-                size: 20,
+                size: 25,
               ),
               label: 'More',
             ),
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
             //color: Colors.grey,
           ),
           width: double.infinity,
-          height: 120,
+          height: 110,
         ),
       ],
     );

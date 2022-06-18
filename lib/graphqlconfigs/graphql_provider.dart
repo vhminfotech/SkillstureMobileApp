@@ -13,7 +13,7 @@ class GraphqlProviderClass {
     GraphQLClient(
       link: linked,
       cache: GraphQLCache(
-        store: HiveStore(),
+        //store: HiveStore(),
       ),
     ),
   );
@@ -22,7 +22,7 @@ class GraphqlProviderClass {
     return GraphQLClient(
       link: linked,
       cache: GraphQLCache(
-        store: HiveStore(),
+        //store: HiveStore(),
       ),
     );
   }

@@ -70,7 +70,7 @@ class LocalizationEN implements Localization {
   String get errorPassword => "errorPassword";
 
   @override
-  String get errorValidMobileNumber => "errorValidMobileNumber";
+  String get errorValidMobileNumber => "Invalid mobile number";
 
   @override
   String get errorValidPassword => "errorValidPassword";

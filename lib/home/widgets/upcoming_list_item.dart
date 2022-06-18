@@ -13,7 +13,9 @@ class UpcomingListItem extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(
             color: Color(0xFF262261),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10.0),
+            ),
           ),
           height: 300,
           width: 180,
@@ -27,7 +29,9 @@ class UpcomingListItem extends StatelessWidget {
                       ),
                       fit: BoxFit.fill),
                   color: Colors.blueGrey.shade200,
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
                 ),
                 height: 120,
               ),
@@ -60,7 +64,8 @@ class UpcomingListItem extends StatelessWidget {
                         ),
                         Text(
                           "18 May 2022 8:30pm",
-                          style: Utils.styleTextStyleUpcomingListSubTitleTextField(),
+                          style: Utils
+                              .styleTextStyleUpcomingListSubTitleTextField(),
                         ),
                       ],
                     ),
@@ -80,7 +85,8 @@ class UpcomingListItem extends StatelessWidget {
                         ),
                         Text(
                           "Alicia Yap",
-                          style: Utils.styleTextStyleUpcomingListSubTitleTextField(),
+                          style: Utils
+                              .styleTextStyleUpcomingListSubTitleTextField(),
                         ),
                       ],
                     ),
@@ -101,9 +107,10 @@ class UpcomingListItem extends StatelessWidget {
                         child: const Text(
                           "Remind Me",
                           style: TextStyle(
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Comfortaa-Bold"),
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Comfortaa-Bold",
+                          ),
                         ),
                       ),
                     ),

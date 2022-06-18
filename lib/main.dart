@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,8 +35,9 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: routeLaunch,
           onGenerateRoute: NavigationUtils.generateRoute,
-          localizationsDelegates: const [
+          localizationsDelegates: [
             MyLocalizationsDelegate(),
+            CountryLocalizations.delegate,
             DefaultMaterialLocalizations.delegate,
             DefaultWidgetsLocalizations.delegate,
           ],
