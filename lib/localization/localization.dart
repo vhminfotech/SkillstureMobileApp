@@ -45,9 +45,7 @@ abstract class Localization {
     return Localizations.of<Localization>(context, Localization);
   }
 
-
   String get internetNotConnected;
-
   String get email;
   String get name;
   String get mobile;
@@ -57,7 +55,6 @@ abstract class Localization {
   String get password;
   String get confirmPassword;
   String get signIn;
-
 
   String get msgEnterAddress;
   String get msgEnterValidAddress;
@@ -73,12 +70,4 @@ abstract class Localization {
   String get errorValidPassword;
   String get errorConfirmPassword;
   String get errorDiffPassword;
-
-
-
-
-
-
-
-
 }

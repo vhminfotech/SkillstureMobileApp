@@ -33,6 +33,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  get: ^4.6.5
   intl: ^0.17.0
   google_fonts: ^3.0.1
   graphql_flutter: ^5.1.0
@@ -113,6 +114,10 @@ flutter:
     - assets/images/star@2x.png
     - assets/images/user_group.png
     - assets/images/background_quiz.png
+    - assets/images/background-illustration@2x.png
+    - assets/images/back@2x.png
+    - assets/images/Chevron-right@2x.png
+    - assets/images/background-illustration1@2x.png
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
