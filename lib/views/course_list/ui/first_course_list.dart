@@ -202,9 +202,13 @@ class FirstCourseListScreen extends GetView<FirstListController> {
                       borderRadius: BorderRadius.all(Radius.circular(6)),
                       side: BorderSide(color: Color(0xFFF05A28))))),
           onPressed: () {
+            print("First List Dialog");
+            controller.nextButtonPressed();
+/*            print(controller.roleInstructor.value);
             Get.toNamed(
               RoutesConstant.getRouteSecondCourseList(),
-            );
+              arguments: controller.roleInstructor.value
+            );*/
           },
           child: const Text(
             "Next",
@@ -262,7 +266,7 @@ class FirstCourseListScreen extends GetView<FirstListController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           Text(
-            "Industry you’re in / interested…",
+            "Industry you’re in interested…",
             style: TextStyle(
                 color: Colors.white,
                 fontFamily: "Comfortaa-Bold",

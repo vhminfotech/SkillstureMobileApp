@@ -2,13 +2,15 @@ import 'package:country_code_picker/country_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import '../controllers/graphqlconfigs/graphql_provider.dart';
-import '../controllers/navigation/routes_constant.dart';
-import '../localization/localization.dart';
+import 'controllers/graphqlconfigs/graphql_provider.dart';
+import 'controllers/navigation/routes_constant.dart';
+import 'localization/localization.dart';
 
 void main() async {
+  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await initHiveForFlutter();

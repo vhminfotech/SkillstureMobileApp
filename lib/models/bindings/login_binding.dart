@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:skillsture_project/controllers/auth/login_controller.dart';
+import 'package:skillsture_project/controllers/auth/learner/login_controller.dart';
 
 class LoginBinding extends Bindings{
   @override

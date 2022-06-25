@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../navigation/routes_constant.dart';
+
 class InstructorRegisterSecondController extends GetxController{
 
   GlobalKey<FormState> instructorSignUpFormKeySecond = GlobalKey<FormState>();
@@ -9,6 +11,13 @@ class InstructorRegisterSecondController extends GetxController{
   late TextEditingController typeController,
       regNumberController,
       websiteController;
+
+  Rx<String> name = Rx<String>("");
+  Rx<String> email = Rx<String>("");
+  Rx<String> mobile = Rx<String>("");
+  Rx<String> password = Rx<String>("");
+  Rx<String> address = Rx<String>("");
+  Rx<String> socialProfile = Rx<String>("");
 
   var type = "";
   var regNumber = "";
@@ -35,6 +44,12 @@ class InstructorRegisterSecondController extends GetxController{
     bottomSheetIconVisible.value = false;
     selectedIndex.value = 0;
     selectedType.value = "Company";
+    name.value = Get.arguments[0]["name"];
+    email.value = Get.arguments[1]["email"];
+    mobile.value = Get.arguments[2]["mobile"];
+    password.value = Get.arguments[3]["password"];
+    address.value = Get.arguments[4]["address"];
+    socialProfile.value = Get.arguments[5]["socialProfile"];
   }
 
   @override
@@ -57,14 +72,28 @@ class InstructorRegisterSecondController extends GetxController{
     websiteController.dispose();
   }
 
-  void checkNextButtonValidated(){
+  void checkNextButtonSecond(){
     final isValidated = instructorSignUpFormKeySecond.currentState!.validate();
     if (!isValidated) {
       return;
     }
     instructorSignUpFormKeySecond.currentState!.save();
-    print(type);
+    print(name.value);
+
+    print(typeController.text);
     print(regNumber);
+    Get.toNamed(RoutesConstant.getRouteRegisterInstructorThird(),
+    arguments: [
+        {"name": name.value},
+        {"email": email.value},
+        {"mobile": mobile.value},
+        {"password": password.value},
+        {"address": address.value},
+        {"socialProfile": socialProfile.value},
+        {"type": typeController.text.toString()},
+        {"regNumber": regNumber},
+        {"websiteCompany": websiteCompany},
+        ]);
   }
 
   void checkedBottomSheetItem(String item){

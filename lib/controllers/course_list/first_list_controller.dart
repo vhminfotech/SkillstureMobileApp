@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../navigation/routes_constant.dart';
+
 class FirstListController extends GetxController {
 
   final List<String> courseItems = [
@@ -29,12 +31,17 @@ class FirstListController extends GetxController {
 
   Rx<List<String>> selectedCourse = Rx<List<String>>([]);
 
+  Rx<String> roleInstructor = Rx<String>("");
+
 
   @override
   void onInit() {
     super.onInit();
     searchCourse.value = courseItems;
     selectedCourse.value = [];
+    roleInstructor.value = "${Get.arguments}";
+    print("First List");
+    print("${Get.arguments}");
   }
 
   @override
@@ -81,7 +88,19 @@ class FirstListController extends GetxController {
 
   void removeFromBottomSheetList(String CourseRemove){
     selectedCourse.value.remove(CourseRemove);
+    selectedCourse.value = selectedCourse.value;
+    selectedCourse.refresh();
     print(CourseRemove);
+  }
+
+  void nextButtonPressed(){
+    if(selectedCourse.value.isEmpty){
+      Get.snackbar("Error", "Please select the course",snackPosition: SnackPosition.BOTTOM);
+    }
+    else{
+      Get.toNamed(RoutesConstant.getRouteSecondCourseList(),
+      arguments: roleInstructor.value.toString());
+    }
   }
 
 }

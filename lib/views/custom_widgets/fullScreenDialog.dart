@@ -17,7 +17,7 @@ class FullScreenDialog {
         onWillPop: () => Future.value(false),
       ),
       barrierDismissible: false,
-      barrierColor: Colors.blueGrey.withOpacity(2),
+      barrierColor: Color(0x40262261),
       useSafeArea: true
     );
   }

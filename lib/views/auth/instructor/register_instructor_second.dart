@@ -102,8 +102,10 @@ class RegisterInstructorSecondScreen
         textColor: Colors.white,
         elevation: 1.0,
         onPressed: () {
-          //controller.checkNextButtonValidated();
-          Get.toNamed(RoutesConstant.getRouteRegisterInstructorThird());
+          controller.checkNextButtonSecond();
+/*          print("Second Screen: ${Get.arguments}");
+          Get.toNamed(RoutesConstant.getRouteRegisterInstructorThird(),
+          arguments: "${Get.arguments}");*/
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.5),

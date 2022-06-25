@@ -1,10 +1,13 @@
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:skillsture_project/controllers/auth/instructor/instructor_register_first_controller.dart';
+import 'package:skillsture_project/controllers/auth/learner/login_controller.dart';
 import 'package:skillsture_project/models/bindings/explore_skill_details_binding.dart';
 import 'package:skillsture_project/models/bindings/first_course_list_binding.dart';
 import 'package:skillsture_project/models/bindings/instructor_register_binding.dart';
 import 'package:skillsture_project/models/bindings/instructor_register_third_binding.dart';
+import 'package:skillsture_project/models/bindings/login_binding.dart';
+import 'package:skillsture_project/views/home/ui/homepage_instructor.dart';
 import 'package:skillsture_project/views/auth/instructor/register_instructor_first.dart';
 import 'package:skillsture_project/views/auth/instructor/register_instructor_second.dart';
 import 'package:skillsture_project/views/auth/instructor/register_instructor_third.dart';
@@ -13,6 +16,8 @@ import 'package:skillsture_project/views/explore_skills/explore_skill_screen.dar
 import 'package:skillsture_project/views/splash.dart';
 import '../../models/bindings/explore_skill_binding.dart';
 import '../../models/bindings/instructor_register_second_binding.dart';
+import '../../models/bindings/register_binding.dart';
+import '../../models/bindings/second_course_list_binding.dart';
 import '../../views/auth/learner/check_your_mail.dart';
 import '../../views/auth/learner/forgot_password.dart';
 import '../../views/auth/learner/login.dart';
@@ -36,6 +41,7 @@ class RoutesConstant {
   static String routeRegisterInstructorSecond =
       "/routeRegisterInstructorSecond";
   static String routeRegisterInstructorThird = "/routeRegisterInstructorThird";
+  static String routeHomePageInstructor = "/routeHomePageInstructor";
 
   static String getRouteLaunch() => routeLaunch;
 
@@ -66,10 +72,18 @@ class RoutesConstant {
   static String getRouteRegisterInstructorThird() =>
       routeRegisterInstructorThird;
 
+  static String getRouteHomePageInstructor() => routeHomePageInstructor;
+
   static List<GetPage> routes = [
     GetPage(name: routeLaunch, page: () => SplashScreen()),
-    GetPage(name: routeLogin, page: () => LoginScreen()),
-    GetPage(name: routeRegister, page: () => RegisterScreen()),
+    GetPage(
+        name: routeLogin,
+        page: () => LoginScreen(),
+        binding: LoginBinding()),
+    GetPage(
+        name: routeRegister,
+        page: () => RegisterScreen(),
+        binding: RegisterBinding()),
     GetPage(name: routeForgotPassword, page: () => ForgotPasswordScreen()),
     GetPage(name: routeCheckYourMail, page: () => CheckYourMailScreen()),
     GetPage(name: routeHomePage, page: () => HomePageScreen()),
@@ -77,7 +91,10 @@ class RoutesConstant {
         name: routeFirstCourseList,
         page: () => FirstCourseListScreen(),
         binding: FirstCourseListBinding()),
-    GetPage(name: routeSecondCourseList, page: () => SecondCourseList()),
+    GetPage(
+        name: routeSecondCourseList,
+        page: () => SecondCourseListScreen(),
+        binding: SecondCourseListBinding()),
     GetPage(
         name: routeExploreSkills,
         page: () => ExploreSkillsScreen(),
@@ -95,8 +112,9 @@ class RoutesConstant {
         page: () => RegisterInstructorSecondScreen(),
         binding: InstructorRegisterBindingSecond()),
     GetPage(
-      name: routeRegisterInstructorThird,
-      page: () => RegisterInstructorThirdScreen(),
-      binding: InstructorRegisterBindingThird()),
+        name: routeRegisterInstructorThird,
+        page: () => RegisterInstructorThirdScreen(),
+        binding: InstructorRegisterBindingThird()),
+    GetPage(name: routeHomePageInstructor, page: () => HomePageInstructor()),
   ];
 }

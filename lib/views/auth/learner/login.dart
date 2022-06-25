@@ -1,237 +1,119 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:skillsture_project/controllers/auth/learner/login_controller.dart';
+import '../../../constants/constants_utils.dart';
 import '../../../controllers/graphqlconfigs/mutation_query.dart';
 import '../../../controllers/navigation/routes_constant.dart';
-import '../../../localization/localization.dart';
-import '../../../models/utils.dart';
 import '../../custom_widgets/header_image.dart';
-import '../../../controllers/auth/auth_bloc.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
+class LoginScreen extends GetView<LoginController> {
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final FocusNode _emailFocus = FocusNode();
-  final FocusNode _passwordFocus = FocusNode();
-
-  bool _passwordVisible = true;
-  final GlobalKey<FormState> _key = GlobalKey();
-
-  late String _email;
-  late String _password;
-
-  @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Form(
+          key: controller.loginKey,
+          autovalidateMode: AutovalidateMode.always,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                HeaderImage(label: 'Welcome'),
+                _getEmailTextField(),
+                _getPasswordTextField(),
+                _getForgotPasswordButton(),
+                _getLoginMutation(),
+                _txtSignedInOption(),
+                _getSocialButton(),
+                _getAccountRegister(),
+                _getSignUpAsInstructor(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  @override
-  Widget build(BuildContext context) => SafeArea(
-        child: Scaffold(
-          body: Form(
-            key: _key,
-            autovalidateMode: AutovalidateMode.always,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  HeaderImage(label: 'Welcome'),
-                  _getEmailTextField(),
-                  _getPasswordTextField(),
-                  _getForgotPasswordButton(),
-                  Mutation(
-                    options: MutationOptions(
-                        document: gql(MutationQuery().loginUser),
-                        onError: (dynamic errorData){
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                "Invalid Credentials",
-                              ),
-                            ),
-                          );
-                        },
-                        onCompleted: (dynamic resultData) {
-                          if (resultData == null) {
-                            print("Login Failed");
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  "Invalid Credentials",
-                                ),
-                              ),
-                            );
-                            return;
-                          } else {
-                            print("Login Token");
-                            print(resultData.toString());
-                            Get.toNamed(
-                              RoutesConstant.getRouteHomePage(),
-                            );
-                          }
-                        }),
-                    builder: (runMutation, result) {
-                      return _getLoginButton(runMutation);
-                    },
-                  ),
-                  //_getLoginButton(),
-                  _txtSignedInOption(),
-                  _getSocialButton(),
-                  _getAccountRegister(),
-                  _getSignUpAsInstructor(),
-                ],
-              ),
-            ),
-          ),
+  Widget _getLoginMutation() {
+    return Mutation(
+      options: MutationOptions(
+        document: gql(MutationQuery().loginUser),
+        onCompleted: (resultData) {
+          print("Login : $resultData");
+          if (resultData == null || resultData == "undefined") {
+            print("Login Failed");
+            return;
+          } else {
+            print("Login Token");
+            print("@@@@@@@@@@@");
+            print(resultData["login"]);
+            print(resultData["login"]["userId"]);
+            print(resultData["login"]["role"].toString());
+            print(resultData["login"]["token"]);
+            controller.loginUserId.value = resultData["login"]["userId"].toString();
+            controller.loginRole.value = resultData["login"]["role"].toString();
+            controller.loginToken.value = resultData["login"]["token"].toString();
+            controller.loginDetailsStorage();
+            Get.toNamed(
+              RoutesConstant.getRouteHomePage(),
+            );
+          }
+        },
+        onError: (errorData) {
+          if(errorData!.linkException == null){
+            print("Login Error: $errorData");
+            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
+                snackPosition: SnackPosition.BOTTOM);
+          }else if(errorData.linkException != null) {
+            print("Login Error: $errorData");
+            Get.snackbar("Error", "Please check your connection",
+                snackPosition: SnackPosition.BOTTOM);
+          } else{
+            print("Login Error: $errorData");
+            Get.snackbar("Error", "Invalid Credentials",
+                snackPosition: SnackPosition.BOTTOM);
+          }
+        },
+      ),
+      builder: (runMutation, results) {
+        return _getLoginButton(runMutation);
+      },
+    );
+  }
+
+  Widget _getLoginButton(RunMutation runMutation) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+      child: RaisedButton(
+        color: Color(0xFFF05A28),
+        textColor: Colors.white,
+        elevation: 1.0,
+        onPressed: () {
+          controller.checkLogin(runMutation);
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.5),
         ),
-      );
-
-
-  Widget _getEmailTextField() => Container(
-        padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-        child: TextFormField(
-          style: const TextStyle(
-              fontSize: 20.0,
-              color: Color(0xFF262261),
-              fontFamily: "Comfortaa-Medium"),
-          textInputAction: TextInputAction.next,
-          focusNode: _emailFocus,
-          decoration:
-              Utils.styleInputDecoration(Localization.of(context)!.email),
-          validator: (value) => Utils.isValidEmail(context, value!),
-          onSaved: (value) {
-            _email = value!;
-          },
-          keyboardType: TextInputType.emailAddress,
+        child: Text(
+          "Login",
+          style: TextStyle(fontSize: 18.0, fontFamily: "Comfortaa-Bold"),
         ),
-      );
-
-  Widget _getForgotPasswordButton() => Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FlatButton(
-            onPressed: _forgotPasswordPressed,
-            child: Text(
-              Localization.of(context)!.forgotPassword,
-              style: const TextStyle(
-                  fontSize: 16.0,
-                  color: Color(0xB3262261),
-                  fontFamily: "Comfortaa-Medium"),
-            ),
-          ),
-        ],
-      );
-
-  Widget _getSocialButton() => Container(
-        padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: SizedBox(
-                height: 50,
-                child: RaisedButton(
-                  color: Colors.white,
-                  textColor: Colors.white,
-                  elevation: 1.0,
-                  onPressed: () {
-                    AuthBloc().googleLoginPressed().then((value) {
-                      final userEmail = value.user!.email;
-                      Get.toNamed(
-                        RoutesConstant.getRouteHomePage(),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(value.user!.email.toString()),
-                      ));
-                      print(userEmail);
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7.5),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/images/ic_google.png',
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      const Text(
-                        "Google",
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontFamily: "Comfortaa-Bold",
-                            color: Color(0xFF262261)),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: SizedBox(
-                height: 50,
-                child: RaisedButton(
-                  color: Colors.white,
-                  textColor: Colors.white,
-                  elevation: 1.0,
-                  //onPressed: _facebookLoginPressed,
-                  onPressed: () {
-                    AuthBloc().facebookLoginPressed().then((value) {
-                      final userEmail = value.user!.email;
-                      Get.toNamed(
-                        RoutesConstant.getRouteHomePage(),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(value.user!.email.toString()),
-                      ));
-                      print(userEmail);
-                    });
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7.5),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Image.asset(
-                        'assets/images/ic_facebook.png',
-                        width: 18.0,
-                        height: 18.0,
-                      ),
-                      const Text(
-                        "Facebook",
-                        style: TextStyle(
-                            fontSize: 16.0,
-                            fontFamily: "Comfortaa-Bold",
-                            color: Color(0xFF262261)),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+      ),
+    );
+  }
 
   Widget _getAccountRegister() => Container(
         margin: const EdgeInsets.all(10),
         child: FlatButton(
           padding: const EdgeInsets.all(10),
-          onPressed: _registerPressed,
+          onPressed: () {
+            Get.toNamed(RoutesConstant.getRouteRegister());
+          },
           child: RichText(
             text: const TextSpan(
-              // Note: Styles for TextSpans must be explicitly defined.
-              // Child text spans will inherit styles from parent
               children: <TextSpan>[
                 TextSpan(
                   text: "Don't have an account?",
@@ -258,14 +140,12 @@ class _LoginScreenState extends State<LoginScreen> {
         child: FlatButton(
           padding: const EdgeInsets.all(10),
           onPressed: () {
-            Get.toNamed(
-              RoutesConstant.getRouteRegisterInstructorFirst(),
-            );
+            print("login screen");
+            Get.toNamed(RoutesConstant.getRouteRegisterInstructorFirst(),
+                arguments: "instructor");
           },
           child: RichText(
             text: const TextSpan(
-              // Note: Styles for TextSpans must be explicitly defined.
-              // Child text spans will inherit styles from parent
               children: <TextSpan>[
                 TextSpan(
                   text: "Want to become an instructor?",
@@ -286,6 +166,171 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       );
+
+  Widget _getGoogleMutation() {
+    return Mutation(
+      options: MutationOptions(
+        document: gql(MutationQuery().registeredGoogleUser),
+        onCompleted: (resultData) {
+          if (resultData == null || resultData == "undefined") {
+            print("Registered Failed");
+            return;
+          } else {
+            print("Login Token @@@@@@@@@@@@@@@@");
+            print(resultData.toString());
+            print(resultData["googleSignup"]["token"]);
+            Get.toNamed(
+              RoutesConstant.getRouteHomePage(),
+            );
+          }
+        },
+        onError: (errorData) {
+          if(errorData!.linkException == null){
+            print("Login Error: $errorData");
+            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
+                snackPosition: SnackPosition.BOTTOM);
+          }else if(errorData.linkException != null) {
+            print("Login Error: $errorData");
+            Get.snackbar("Error", "Please check your connection",
+                snackPosition: SnackPosition.BOTTOM);
+          } else{
+            print("Login Error: $errorData");
+            Get.snackbar("Error", "Invalid Credentials",
+                snackPosition: SnackPosition.BOTTOM);
+          }
+        },
+      ),
+      builder: (runMutation, results) {
+        return _googleButton(runMutation);
+      },
+    );
+  }
+
+  Widget _googleButton(RunMutation runMutation) {
+    return RaisedButton(
+      color: Colors.white,
+      textColor: Colors.white,
+      elevation: 1.0,
+      onPressed: () {
+        controller.googleLoginPressed(runMutation);
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7.5),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Image.asset(
+            'assets/images/ic_google.png',
+            width: 18.0,
+            height: 18.0,
+          ),
+          const Text(
+            "Google",
+            style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: "Comfortaa-Bold",
+                color: Color(0xFF262261)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getFacebookMutation() {
+    return Mutation(
+      options: MutationOptions(
+        document: gql(MutationQuery().registeredFacebookUser),
+        onCompleted: (dynamic resultData) {
+          if (resultData == null || resultData == "undefined") {
+            print("Login Failed");
+            return;
+          } else {
+            print("Login Token");
+            print(resultData.toString());
+            Get.toNamed(
+              RoutesConstant.getRouteHomePage(),
+            );
+          }
+        },
+        onError: (dynamic errorData) {
+          if(errorData!.linkException == null){
+            print("Login Error: $errorData");
+            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
+                snackPosition: SnackPosition.BOTTOM);
+          }else if(errorData.linkException != null) {
+            print("Login Error: $errorData");
+            Get.snackbar("Error", "Please check your connection",
+                snackPosition: SnackPosition.BOTTOM);
+          } else{
+            print("Login Error: $errorData");
+            Get.snackbar("Error", "Invalid Credentials",
+                snackPosition: SnackPosition.BOTTOM);
+          }
+        },
+      ),
+      builder: (runMutation, results) {
+        return _facebookButton(runMutation);
+      },
+    );
+  }
+
+  Widget _facebookButton(RunMutation runMutation) {
+    return RaisedButton(
+      color: Colors.white,
+      textColor: Colors.white,
+      elevation: 1.0,
+      onPressed: () {
+        controller.facebookLoginPressed(runMutation);
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(7.5),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Image.asset(
+            'assets/images/ic_facebook.png',
+            width: 18.0,
+            height: 18.0,
+          ),
+          const Text(
+            "Facebook",
+            style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: "Comfortaa-Bold",
+                color: Color(0xFF262261)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getSocialButton() {
+    return Container(
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              height: 50,
+              child: _getGoogleMutation(),
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          Expanded(
+            child: SizedBox(
+              height: 50,
+              child: _getFacebookMutation(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _txtSignedInOption() => Row(children: <Widget>[
         Expanded(
@@ -311,90 +356,96 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ]);
 
-  Widget _getLoginButton(RunMutation runMutation) => Container(
-        width: double.infinity,
-        height: 50,
-        margin: const EdgeInsets.all(20),
-        child: RaisedButton(
-          color: const Color(0xFFF05A28),
-          textColor: Colors.white,
-          elevation: 1.0,
-          //onPressed: _loginPressed,
+  Widget _getForgotPasswordButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        FlatButton(
           onPressed: () {
-            if (_key.currentState!.validate()) {
-              _key.currentState!.save();
-              print(_email);
-              print(_password);
-              runMutation({"email": _email, "password": _password});
-            }
+            Get.toNamed(
+              RoutesConstant.getRouteForgotPassword(),
+            );
           },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7.5),
-          ),
           child: Text(
-            Localization.of(context)!.loginTitle,
-            style:
-                const TextStyle(fontSize: 16.0, fontFamily: "Comfortaa-Bold"),
+            "Forget Password",
+            style: const TextStyle(
+                fontSize: 16.0,
+                color: Color(0xB3262261),
+                fontFamily: "Comfortaa-Medium"),
           ),
         ),
-      );
+      ],
+    );
+  }
 
-
-  Widget _getPasswordTextField() => Container(
-        padding:
-            const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
-        child: TextFormField(
+  Widget _getPasswordTextField() {
+    return Container(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+      child: Obx(
+        () => TextFormField(
+          textInputAction: TextInputAction.next,
           style: const TextStyle(
               fontSize: 20.0,
               color: Color(0xFF262261),
               fontFamily: "Comfortaa-Medium"),
-          textInputAction: TextInputAction.done,
-          focusNode: _passwordFocus,
           decoration: InputDecoration(
+            labelText: "Password",
+            labelStyle: ConstantUtils.styleTextStyleTextField(),
+            errorStyle: ConstantUtils.styleTextStyleErrorTextField(),
+            suffixIcon: IconButton(
+              icon: Icon(
+                controller.passwordVisible.value
+                    ? Icons.visibility_off
+                    : Icons.visibility,
+                color: Color(0xFF262261),
+              ),
+              onPressed: () {
+                controller.isPasswordToggle();
+              },
+            ),
             focusedBorder: const UnderlineInputBorder(
               borderSide: BorderSide(color: Color(0xFFFFB451), width: 2),
             ),
-            labelText: Localization.of(context)!.password,
-            labelStyle: Utils.styleTextStyleTextField(),
-            errorStyle: Utils.styleTextStyleErrorTextField(),
-            suffixIcon: IconButton(
-              icon: Icon(
-                _passwordVisible ? Icons.visibility_off : Icons.visibility,
-                color: Theme.of(context).primaryColorDark,
-              ),
-              onPressed: () {
-                setState(() {
-                  _passwordVisible = !_passwordVisible;
-                });
-              },
-            ),
           ),
-          onSaved: (value) {
-            _password = value!;
+          onChanged: (password) {
+            controller.password = password;
           },
+          obscureText: controller.passwordVisible.value,
+          controller: controller.passwordController,
           validator: (value) {
-            return Utils().onValidationPassword(value!);
+            return controller.validatePassword(value!);
           },
-          obscureText: _passwordVisible,
-          onFieldSubmitted: (_) {
-            _passwordFocus.unfocus();
+          onSaved: (value) {
+            controller.password = value!;
           },
         ),
-      );
-
-  void _loginPressed() {
-  }
-
-  void _registerPressed() {
-    Get.toNamed(
-      RoutesConstant.getRouteRegister(),
+      ),
     );
   }
 
-  void _forgotPasswordPressed() {
-    Get.toNamed(RoutesConstant.getRouteHomePage());
-/*    Get.toNamed(
-      RoutesConstant.getRouteForgotPassword(),
-    );*/
+  Widget _getEmailTextField() {
+    return Container(
+      padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+      margin: const EdgeInsets.only(top: 12),
+      child: TextFormField(
+        style: const TextStyle(
+            fontSize: 20.0,
+            color: Color(0xFF262261),
+            fontFamily: "Comfortaa-Medium"),
+        textInputAction: TextInputAction.next,
+        keyboardType: TextInputType.emailAddress,
+        decoration: ConstantUtils.styleInputDecoration("Email"),
+        controller: controller.emailController,
+        validator: (value) {
+          return controller.validateEmail(value!);
+        },
+        onSaved: (value) {
+          controller.email = value!;
+        },
+        onChanged: (value) {
+          controller.email = value;
+        },
+      ),
+    );
   }
 }

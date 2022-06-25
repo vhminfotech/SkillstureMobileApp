@@ -5,7 +5,7 @@ class GraphqlProviderClass {
 
   //static HttpLink httpLink = HttpLink("https://graphqlzero.almansi.me/api",);
 
-  static HttpLink httpLink = HttpLink("https://d9c8-110-227-244-177.in.ngrok.io/graphql");
+  static HttpLink httpLink = HttpLink("http://47.254.245.160:443/graphql");
 
   static Link linked = httpLink;
 

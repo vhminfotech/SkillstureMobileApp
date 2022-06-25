@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../controllers/navigation/routes_constant.dart';
 class SplashScreen extends StatefulWidget {
@@ -11,6 +12,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
+  final loginData = GetStorage();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,9 +57,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _gotoNextScreen() {
-    Get.toNamed(
-      RoutesConstant.getRouteLogin(),
-    );
+    loginData.writeIfNull("isLogged", false);
+    Future.delayed(Duration.zero, () async{
+      loginData.read("isLogged") ? Get.toNamed(
+        RoutesConstant.getRouteHomePage(),
+      ) : Get.toNamed(
+        RoutesConstant.getRouteLogin(),
+      );
+    });
   }
 
   @override

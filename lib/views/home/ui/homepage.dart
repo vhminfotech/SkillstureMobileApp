@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:skillsture_project/models/utils.dart';
 import 'package:skillsture_project/views/home/widgets/circular_list_item.dart';
 import '../../../controllers/navigation/routes_constant.dart';
@@ -18,19 +19,34 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  final GlobalKey<FormState> _key = GlobalKey();
 
   int _selectedIndex = 0;
   static const TextStyle optionStyleSelected = TextStyle(
-      fontSize: 12, fontFamily: "Comfortaa-Bold");
+      fontSize: 11, fontFamily: "Comfortaa-Bold");
 
   static const TextStyle optionStyle = TextStyle(
-      fontSize: 12, fontFamily: "Comfortaa-Medium");
+      fontSize: 11, fontFamily: "Comfortaa-Medium");
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+  bool isRoleInstructor = false;
+
+  final loginData = GetStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    if("${Get.arguments}" == "instructor"){
+      print("${Get.arguments}");
+      isRoleInstructor = true;
+      print(isRoleInstructor.toString());
+    }else{
+      print(isRoleInstructor.toString());
+      isRoleInstructor = false;
+    }
   }
 
   @override
@@ -53,7 +69,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: ImageIcon(
                 AssetImage("assets/images/explore_unselected.png"),
@@ -69,6 +85,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 size: 25,
               ),
               label: 'Search',
+            ),
+            if(isRoleInstructor == true) BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage("assets/images/my-teaching-solid@2x.png"),
+                size: 25,
+              ),
+              label: 'My Teaching',
             ),
             BottomNavigationBarItem(
               icon: ImageIcon(
@@ -474,7 +497,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
             height: 30,
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              loginData.write("isLogged", false);
+              loginData.remove("role");
+              loginData.remove("userId");
+              loginData.remove("loginToken");
+              Get.toNamed(RoutesConstant.getRouteLogin());
+            },
             child: Image.asset(
               'assets/images/home_bell@2x.png',
               height: 30,

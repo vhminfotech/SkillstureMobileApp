@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skillsture_project/constants/constants_utils.dart';
 
+import '../../navigation/routes_constant.dart';
+
 class InstructorRegisterFirstController extends GetxController {
+
   GlobalKey<FormState> instructorSignUpFormKeyFirst = GlobalKey<FormState>();
 
   late TextEditingController nameController,
@@ -107,6 +110,8 @@ class InstructorRegisterFirstController extends GetxController {
   String? validateConfirmPassword(String value) {
     if (value.isEmpty) {
       return "Please enter a confirm password";
+    } else if (value != password) {
+      return "Invalid confirm password";
     }
     return null;
   }
@@ -125,7 +130,7 @@ class InstructorRegisterFirstController extends GetxController {
     return null;
   }
 
-  void checkSignUpInstructor() {
+  void checkNextButtonFirst() {
     final isValidated = instructorSignUpFormKeyFirst.currentState!.validate();
     if (!isValidated) {
       return;
@@ -138,6 +143,16 @@ class InstructorRegisterFirstController extends GetxController {
     print(confirmPassword);
     print(address);
     print(socialProfile);
+
+    Get.toNamed(RoutesConstant.getRouteRegisterInstructorSecond(),
+        arguments: [
+          {"name": name},
+          {"email": email},
+          {"mobile": mobile},
+          {"password": password},
+          {"address": address},
+          {"socialProfile": socialProfile},
+        ]);
   }
 
   void onChangePassword(String password) {

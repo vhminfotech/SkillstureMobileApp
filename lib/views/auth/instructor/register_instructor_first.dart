@@ -138,8 +138,10 @@ class RegisterInstructorFirstScreen extends GetView<InstructorRegisterFirstContr
         textColor: Colors.white,
         elevation: 1.0,
         onPressed: () {
-          //controller.checkSignUpInstructor();
-          Get.toNamed(RoutesConstant.getRouteRegisterInstructorSecond());
+          controller.checkNextButtonFirst();
+          /*print("First Screen: ${Get.arguments}");
+          Get.toNamed(RoutesConstant.getRouteRegisterInstructorSecond(),
+          arguments: "${Get.arguments}" );*/
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.5),
@@ -228,6 +230,7 @@ class RegisterInstructorFirstScreen extends GetView<InstructorRegisterFirstContr
             ),
           ),
           onChanged: (password) {
+            controller.password = password;
             controller.onChangePassword(password);
           },
           obscureText: controller.passwordVisible.value,
@@ -279,6 +282,9 @@ class RegisterInstructorFirstScreen extends GetView<InstructorRegisterFirstContr
           },
           onSaved: (value) {
             controller.confirmPassword = value!;
+          },
+          onChanged: (value) {
+            controller.confirmPassword = value;
           },
         ),
       ),

@@ -79,14 +79,20 @@ class RegisterInstructorThirdScreen
               const SizedBox(
                 height: 30,
               ),
-              Icon(Icons.picture_as_pdf_outlined, color: Color(0x80262261),),
+              Icon(
+                Icons.picture_as_pdf_outlined,
+                color: Color(0x80262261),
+              ),
               const SizedBox(
                 height: 10,
               ),
-              Text("PDF file format only",style: const TextStyle(
-                  fontSize: 16.0,
-                  color: Color(0x80262261),
-                  fontFamily: "Comfortaa-Medium"),),
+              Text(
+                "PDF file format only",
+                style: const TextStyle(
+                    fontSize: 16.0,
+                    color: Color(0x80262261),
+                    fontFamily: "Comfortaa-Medium"),
+              ),
             ],
           ),
           const SizedBox(
@@ -120,7 +126,7 @@ class RegisterInstructorThirdScreen
       ),
     ];
 
-    for (int i = 0; i < controller.values.value.length; i++) {
+    for (int i = 0; i < controller.teachingAreas.value.length; i++) {
       InputChip actionChip = InputChip(
         deleteIcon: const Icon(Icons.clear, color: Color(0xFF262261)),
         shape: const RoundedRectangleBorder(
@@ -131,7 +137,7 @@ class RegisterInstructorThirdScreen
         labelPadding: const EdgeInsets.all(7),
         backgroundColor: const Color(0xFFFEEDC5),
         label: Text(
-          controller.values.value[i],
+          controller.teachingAreas.value[i],
           style: const TextStyle(
               fontSize: 18.0,
               color: Color(0xFF262261),
@@ -182,7 +188,8 @@ class RegisterInstructorThirdScreen
             textInputAction: TextInputAction.next,
             decoration: const InputDecoration(
               enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFFFB451), width: 2),),
+                borderSide: BorderSide(color: Color(0xFFFFB451), width: 2),
+              ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFFFFB451), width: 2),
               ),
@@ -324,8 +331,79 @@ class RegisterInstructorThirdScreen
         textColor: Colors.white,
         elevation: 1.0,
         onPressed: () {
-          //controller.checkNextButtonValidated();
-          Get.toNamed(RoutesConstant.getRouteRegisterInstructorThird());
+          controller.checkNextButtonThird();
+/*          Get.defaultDialog(
+            title: "",
+            titleStyle: TextStyle(fontSize: 1.0),
+            content: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/astronaut@2x.png',
+                    height: 110,
+                    width: 110,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "Thank you! We got \nyour application.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: "Cocogoose-Regular",
+                      color: Color(0xFF262261),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Thank you for signing up as an instructor. We will review your submission and once approved we will notify you through email. As for now you can log in as a learner to explore SKILLSTURE.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        height: 1.3,
+                        fontSize: 15.0,
+                        fontFamily: "Comfortaa-Regular",
+                        color: Color(0xFF262261),
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 45,
+                    width: 70,
+                    child: RaisedButton(
+                      color: const Color(0xFFF05A28),
+                      textColor: Colors.white,
+                      elevation: 1.0,
+                      onPressed: () {
+                        print("Third Screen Dialog Box");
+                        print(controller.instructorRole.value);
+                        Get.toNamed(RoutesConstant.routeFirstCourseList,
+                            arguments: controller.instructorRole.value);
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.5),
+                      ),
+                      child: Text(
+                        "OK",
+                        style: const TextStyle(
+                            fontSize: 16.0, fontFamily: "Comfortaa-Bold"),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );*/
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.5),
