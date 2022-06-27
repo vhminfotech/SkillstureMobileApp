@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:skillsture_project/controllers/home/home_page_controller.dart';
 import 'package:skillsture_project/models/utils.dart';
 import 'package:skillsture_project/views/home/widgets/circular_list_item.dart';
 import '../../../controllers/navigation/routes_constant.dart';
@@ -11,44 +11,7 @@ import '../widgets/upcoming_list_item.dart';
 import '../widgets/video_list_item.dart';
 import '../widgets/whats_new_list_item.dart';
 
-class HomePageScreen extends StatefulWidget {
-  const HomePageScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomePageScreen> createState() => _HomePageScreenState();
-}
-
-class _HomePageScreenState extends State<HomePageScreen> {
-
-  int _selectedIndex = 0;
-  static const TextStyle optionStyleSelected = TextStyle(
-      fontSize: 11, fontFamily: "Comfortaa-Bold");
-
-  static const TextStyle optionStyle = TextStyle(
-      fontSize: 11, fontFamily: "Comfortaa-Medium");
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-  bool isRoleInstructor = false;
-
-  final loginData = GetStorage();
-
-  @override
-  void initState() {
-    super.initState();
-    if("${Get.arguments}" == "instructor"){
-      print("${Get.arguments}");
-      isRoleInstructor = true;
-      print(isRoleInstructor.toString());
-    }else{
-      print(isRoleInstructor.toString());
-      isRoleInstructor = false;
-    }
-  }
-
+class HomePageScreen extends GetView<HomePageController>{
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,55 +30,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
               _getBottomImageView(),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage("assets/images/explore_unselected.png"),
-                size: 25,
-              ),
-              label: 'Explore',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage(
-                  "assets/images/search_unselected.png",
-                ),
-                size: 25,
-              ),
-              label: 'Search',
-            ),
-            if(isRoleInstructor == true) BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage("assets/images/my-teaching-solid@2x.png"),
-                size: 25,
-              ),
-              label: 'My Teaching',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage("assets/images/book_unselected.png"),
-                size: 25,
-              ),
-              label: 'My Learning',
-            ),
-            BottomNavigationBarItem(
-              icon: ImageIcon(
-                AssetImage("assets/images/more_unselected.png"),
-                size: 25,
-              ),
-              label: 'More',
-            ),
-          ],
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          showUnselectedLabels: true,
-          unselectedItemColor: Colors.grey,
-          selectedItemColor: const Color(0xFF262261),
-          onTap: _onItemTapped,
-          selectedLabelStyle: optionStyleSelected,
-          unselectedLabelStyle: optionStyle,
         ),
       ),
     );
@@ -498,10 +412,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
           GestureDetector(
             onTap: () {
-              loginData.write("isLogged", false);
+/*              loginData.write("isLogged", false);
               loginData.remove("role");
               loginData.remove("userId");
-              loginData.remove("loginToken");
+              loginData.remove("loginToken");*/
               Get.toNamed(RoutesConstant.getRouteLogin());
             },
             child: Image.asset(

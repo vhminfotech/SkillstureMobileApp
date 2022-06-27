@@ -362,8 +362,11 @@ class LoginScreen extends GetView<LoginController> {
       children: <Widget>[
         FlatButton(
           onPressed: () {
-            Get.toNamed(
+            /*Get.toNamed(
               RoutesConstant.getRouteForgotPassword(),
+            );*/
+            Get.toNamed(
+              RoutesConstant.getRouteDashBoardPage(),
             );
           },
           child: Text(
