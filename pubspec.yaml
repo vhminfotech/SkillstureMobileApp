@@ -118,7 +118,6 @@ flutter:
     - assets/images/back@2x.png
     - assets/images/Chevron-right@2x.png
     - assets/images/background-illustration1@2x.png
-    - assets/images/background-illustration.png
     - assets/images/astronaut@2x.png
     - assets/images/my-teaching-solid@2x.png
     - assets/images/astronaut-5.png
@@ -130,12 +129,6 @@ flutter:
     - assets/images/graphics_views@2x.png
     - assets/images/graphics_followers@2x.png
     - assets/images/like@2x.png
-    - assets/images/icon_change_password.png
-    - assets/images/icon_edit_profile.png
-    - assets/images/icon_help_center.png
-    - assets/images/icon_info.png
-    - assets/images/icon_my_subscription.png
-
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
