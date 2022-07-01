@@ -45,6 +45,7 @@ class WhatsNewItem extends StatelessWidget {
         ),
         Text(
           "10 Benefits of Cloud Computing and ...",
+          overflow: TextOverflow.ellipsis,
           style: Utils.styleTextStyleWhatsNewTitleListTextField(),
         ),
         const SizedBox(

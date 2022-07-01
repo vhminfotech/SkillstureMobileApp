@@ -23,7 +23,7 @@ class HeaderImage extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 25.0,
                     color: Colors.white,
-                    fontFamily: "Cocogoose-Regular")),
+                    fontFamily: "Cocogoose-Regular"),),
           ),
         )
       ],

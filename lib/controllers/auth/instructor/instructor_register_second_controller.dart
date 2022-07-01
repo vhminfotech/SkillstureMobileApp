@@ -57,19 +57,19 @@ class InstructorRegisterSecondController extends GetxController{
     super.onReady();
   }
 
-  String? validateRegNumber(String value){
-    if(value.isEmpty){
-      return "Please enter a number";
-    }
-    return null;
-  }
-
   @override
   void onClose() {
     super.onClose();
     typeController.dispose();
     regNumberController.dispose();
     websiteController.dispose();
+  }
+
+  String? validateRegNumber(String value){
+    if(value.isEmpty){
+      return "Please enter a number";
+    }
+    return null;
   }
 
   void checkNextButtonSecond(){

@@ -96,9 +96,8 @@ class LoginController extends GetxController {
 
   void googleLoginPressed(RunMutation runMutation) async {
     final googleUser = await GoogleSignIn(scopes: <String>['email']).signIn();
-    //FullScreenDialog.showDialog();
+    FullScreenDialog.showDialog();
 
-    try {
       final googleAuth = await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
@@ -117,17 +116,8 @@ class LoginController extends GetxController {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
-     // FullScreenDialog.cancelDialog();
+     FullScreenDialog.cancelDialog();
 
-    } catch (e) {
-      print(e.toString());
-     // FullScreenDialog.cancelDialog();
-      Get.snackbar("Exception", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
-      Get.toNamed(
-        RoutesConstant.getRouteLogin(),
-      );
-    }
   }
 
   void facebookLoginPressed(RunMutation runMutation) async {

@@ -192,7 +192,7 @@ class RegisterInstructorSecondScreen
           suffixIcon: GestureDetector(
             onTap: () {
               Get.bottomSheet(
-                getBottomSheetView(),
+                _getBottomSheetView(),
                 enableDrag: false,
               );
             },
@@ -212,7 +212,7 @@ class RegisterInstructorSecondScreen
     );
   }
 
-  Widget getBottomSheetView() {
+  Widget _getBottomSheetView() {
     return Container(
       color: Colors.white,
       height: 250,

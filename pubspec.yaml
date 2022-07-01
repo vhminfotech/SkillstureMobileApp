@@ -44,6 +44,7 @@ dependencies:
   flutter_facebook_auth: ^4.3.4+2
   flutter_rating_bar: ^4.0.1
   country_code_picker: ^2.0.2
+  fl_chart: ^0.50.5
 
 dev_dependencies:
   flutter_test:
@@ -120,6 +121,14 @@ flutter:
     - assets/images/astronaut@2x.png
     - assets/images/my-teaching-solid@2x.png
     - assets/images/astronaut-5.png
+    - assets/images/graphics_top banner@2x.png
+    - assets/images/stream@2x.png
+    - assets/images/star@2x_filled.png
+    - assets/images/follower@2x.png
+    - assets/images/graphics_revenu@2x.png
+    - assets/images/graphics_views@2x.png
+    - assets/images/graphics_followers@2x.png
+    - assets/images/like@2x.png
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see

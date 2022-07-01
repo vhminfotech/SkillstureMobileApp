@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:skillsture_project/views/home/ui/homepage.dart';
 import 'package:skillsture_project/views/more/more_page.dart';
 import 'package:skillsture_project/views/my_learning/my_learning_page.dart';
-import 'package:skillsture_project/views/my_teaching/my_teaching_page.dart';
+import 'package:skillsture_project/views/my_teaching/dashboard_tab_my_teaching_page.dart';
 import 'package:skillsture_project/views/search/search_page.dart';
 
 class DashboardPageController extends GetxController {

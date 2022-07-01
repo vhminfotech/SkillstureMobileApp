@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../navigation/routes_constant.dart';
 
 class SecondListController extends GetxController{
@@ -101,8 +100,9 @@ class SecondListController extends GetxController{
       Get.snackbar("Error", "Please select the course",snackPosition: SnackPosition.BOTTOM);
     }
     else{
-      Get.toNamed(RoutesConstant.getRouteHomePage(),
-      arguments: roleInstructorSecond.value.toString());
+      Get.toNamed(
+        RoutesConstant.getRouteDashBoardPage(),
+      arguments: roleInstructorSecond.value.toString(),);
     }
   }
 }

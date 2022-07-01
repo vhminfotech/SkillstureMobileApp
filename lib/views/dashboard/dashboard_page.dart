@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/dashboard/dashboard_page_controller.dart';
-import '../home/ui/homepage.dart';
-import '../more/more_page.dart';
-import '../my_learning/my_learning_page.dart';
-import '../my_teaching/my_teaching_page.dart';
-import '../search/search_page.dart';
 
 class DashboardPageScreen extends GetView<DashboardPageController> {
   final List<BottomNavigationBarItem> learnerNavigationBarItems = [
@@ -105,6 +100,7 @@ class DashboardPageScreen extends GetView<DashboardPageController> {
           onTap: controller.onItemTapped,
           selectedLabelStyle: optionStyleSelected,
           unselectedLabelStyle: optionStyle,
+
         ),
       ),
     );
