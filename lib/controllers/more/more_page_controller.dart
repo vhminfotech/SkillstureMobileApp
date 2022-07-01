@@ -9,6 +9,15 @@ class MorePageController extends GetxController {
     "Terms & Conditions",
     "Privacy Policy",
   ];
+  final List<String> iconItemsList = [
+    "assets/images/icon_edit_profile.png",
+    "assets/images/icon_my_subscription.png",
+    "assets/images/icon_change_password.png",
+    "assets/images/icon_help_center.png",
+    "assets/images/icon_info.png",
+    "assets/images/icon_info.png",
+  ];
+
   @override
   void onInit() {
     super.onInit();
