@@ -8,19 +8,17 @@ import 'package:skillsture_project/views/my_teaching/dashboard_tab_my_teaching_p
 import 'package:skillsture_project/views/search/search_page.dart';
 
 class DashboardPageController extends GetxController {
-
   final selectedItemIndex = Rx<int>(0);
 
   final isRoleInstructor = Rx<bool>(false);
 
   final loginData = GetStorage();
 
-
   @override
   void onInit() {
     super.onInit();
     selectedItemIndex.value = 0;
-    isRoleInstructor.value = true;
+    isRoleInstructor.value = false;
 
 /*    if("${Get.arguments}" == "instructor"){
       print("${Get.arguments}");
@@ -38,11 +36,11 @@ class DashboardPageController extends GetxController {
   }
 
   @override
-  void onClose(){
+  void onClose() {
     super.onClose();
   }
 
-  void onItemTapped(int index){
+  void onItemTapped(int index) {
     selectedItemIndex.value = index;
     update();
   }
@@ -65,5 +63,4 @@ class DashboardPageController extends GetxController {
       MorePageScreen(),
     ];
   }
-
 }
