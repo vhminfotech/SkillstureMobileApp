@@ -1,5 +1,6 @@
 class MutationQuery {
 
+
   String addUser = """
   mutation createUser(\$input : CreateUserInput!){
     createUser(input: \$input){
@@ -63,8 +64,89 @@ class MutationQuery {
 }
   """;
 
-  String registerAsInstructor = """
-  
+  String registerAsInstructor = """ 
+  mutation signupInstructor(   
+    \$fullName: String!
+    \$mobile: String!
+    \$email: String!
+    \$password: String!
+    \$address: String!
+    \$socialProfile: String!
+    \$companyOrInstructor: String!
+    \$registerNumber: String!
+    \$companyWebsite: String!
+    \$introduction: String!
+    \$experience: String!
+    \$teachingArea: [String]!
+    \$certification: String!
+  ){
+    signupInstructor(signupInstructorInput:{
+      fullName: \$fullName
+      mobile: \$mobile
+      email: \$email
+      password: \$password
+      address: \$address
+      socialProfile: \$socialProfile
+      companyOrInstructor: \$companyOrInstructor
+      registerNumber: \$registerNumber
+      companyWebsite: \$companyWebsite
+      introduction: \$introduction
+      experience: \$experience
+      teachingArea : \$teachingArea
+      certification: \$certification
+  }){
+      role
+      token
+      userId
+    }
+  }
   """;
+
+  String uploadCertificate = """
+  mutation(\$files: Upload!){
+    uploadFile(files: \$files){
+      uri
+    }
+  }
+  """;
+
+  String getQuizOneSkillList = """
+  {
+    getAllCoreSkill{
+      allCoreSkillRes{
+        code
+        _id
+        type
+        skillName
+      }
+    }
+  }
+  """;
+
+  String getQuizSecondSkillList = """
+  query (\$coreSkillId: ID)  {
+     getAllChildSkill(coreSkillId:\$coreSkillId){
+        allChildSkillRes{
+          code
+          _id
+          type
+          childSkillName
+        }
+    }
+  }
+  """;
+
+  String getInstructorSkillList = """
+{
+  teachingAreaSkills{
+    allChildSkillRes{
+    _id
+    childSkillName
+    }
+  }
+}
+  """;
+
+
 
 }

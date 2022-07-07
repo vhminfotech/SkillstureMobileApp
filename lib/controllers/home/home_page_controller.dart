@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomePageController extends GetxController {
+
+  final loginData = GetStorage();
 
   @override
   void onInit() {
@@ -16,6 +19,13 @@ class HomePageController extends GetxController {
   @override
   void onClose(){
     super.onClose();
+  }
+
+  void loginDetailsRemoved(){
+    loginData.write("isLogged", false);
+    loginData.remove("role");
+    loginData.remove("userId");
+    loginData.remove("loginToken");
   }
 
 }

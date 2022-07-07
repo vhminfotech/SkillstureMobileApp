@@ -5,6 +5,7 @@ class TeachingPerformanceLiveStreamModel {
   String liveStreamLikes;
   String liveStreamViews;
   String liveStreamStarRatings;
+  String liveStreamInstructor;
 
   TeachingPerformanceLiveStreamModel(
     this.liveStreamImage,
@@ -13,5 +14,6 @@ class TeachingPerformanceLiveStreamModel {
     this.liveStreamLikes,
     this.liveStreamViews,
     this.liveStreamStarRatings,
+    this.liveStreamInstructor,
   );
 }

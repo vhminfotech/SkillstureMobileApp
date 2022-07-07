@@ -8,6 +8,9 @@ import '../../custom_widgets/header_image.dart';
 
 class RegisterInstructorSecondScreen
     extends GetView<InstructorRegisterSecondController> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -103,9 +106,6 @@ class RegisterInstructorSecondScreen
         elevation: 1.0,
         onPressed: () {
           controller.checkNextButtonSecond();
-/*          print("Second Screen: ${Get.arguments}");
-          Get.toNamed(RoutesConstant.getRouteRegisterInstructorThird(),
-          arguments: "${Get.arguments}");*/
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.5),

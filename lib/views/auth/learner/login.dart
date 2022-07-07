@@ -5,6 +5,7 @@ import 'package:skillsture_project/controllers/auth/learner/login_controller.dar
 import '../../../constants/constants_utils.dart';
 import '../../../controllers/graphqlconfigs/mutation_query.dart';
 import '../../../controllers/navigation/routes_constant.dart';
+import '../../custom_widgets/fullScreenDialog.dart';
 import '../../custom_widgets/header_image.dart';
 
 class LoginScreen extends GetView<LoginController> {
@@ -40,10 +41,10 @@ class LoginScreen extends GetView<LoginController> {
       options: MutationOptions(
         document: gql(MutationQuery().loginUser),
         onCompleted: (resultData) {
+          //FullScreenDialog.cancelDialog();
           print("Login : $resultData");
           if (resultData == null || resultData == "undefined") {
             print("Login Failed");
-            return;
           } else {
             print("Login Token");
             print("@@@@@@@@@@@");
@@ -55,12 +56,13 @@ class LoginScreen extends GetView<LoginController> {
             controller.loginRole.value = resultData["login"]["role"].toString();
             controller.loginToken.value = resultData["login"]["token"].toString();
             controller.loginDetailsStorage();
-            Get.toNamed(
-              RoutesConstant.getRouteHomePage(),
+            Get.offNamed(
+              RoutesConstant.getRouteDashBoardPage(),
             );
           }
         },
         onError: (errorData) {
+          FullScreenDialog.cancelDialog();
           if(errorData!.linkException == null){
             print("Login Error: $errorData");
             Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
@@ -172,6 +174,7 @@ class LoginScreen extends GetView<LoginController> {
       options: MutationOptions(
         document: gql(MutationQuery().registeredGoogleUser),
         onCompleted: (resultData) {
+          FullScreenDialog.cancelDialog();
           if (resultData == null || resultData == "undefined") {
             print("Registered Failed");
             return;
@@ -180,11 +183,12 @@ class LoginScreen extends GetView<LoginController> {
             print(resultData.toString());
             print(resultData["googleSignup"]["token"]);
             Get.toNamed(
-              RoutesConstant.getRouteHomePage(),
+              RoutesConstant.getRouteDashBoardPage(),
             );
           }
         },
         onError: (errorData) {
+          FullScreenDialog.cancelDialog();
           if(errorData!.linkException == null){
             print("Login Error: $errorData");
             Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
@@ -249,7 +253,7 @@ class LoginScreen extends GetView<LoginController> {
             print("Login Token");
             print(resultData.toString());
             Get.toNamed(
-              RoutesConstant.getRouteHomePage(),
+              RoutesConstant.getRouteDashBoardPage(),
             );
           }
         },
@@ -362,12 +366,12 @@ class LoginScreen extends GetView<LoginController> {
       children: <Widget>[
         FlatButton(
           onPressed: () {
-            Get.toNamed(
-              RoutesConstant.getRouteForgotPassword(),
-            );
 /*            Get.toNamed(
-              RoutesConstant.getRouteDashBoardPage(),
+              RoutesConstant.getRouteForgotPassword(),
             );*/
+            Get.toNamed(
+              RoutesConstant.getRouteFirstCourseList(),
+            );
           },
           child: Text(
             "Forget Password",

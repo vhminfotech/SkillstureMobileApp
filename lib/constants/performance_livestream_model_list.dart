@@ -8,6 +8,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "3.5",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -16,6 +17,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.5",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -24,6 +26,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -32,6 +35,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -40,6 +44,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -48,6 +53,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -56,6 +62,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -64,6 +71,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -72,6 +80,7 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
   TeachingPerformanceLiveStreamModel(
     "assets/images/whats_bg.jpg",
@@ -80,5 +89,6 @@ final List<TeachingPerformanceLiveStreamModel> performanceLivestreamList = [
     "5.7K",
     "21.5K",
     "4.0",
+    "Alicia Yap",
   ),
 ];

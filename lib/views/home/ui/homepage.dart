@@ -412,10 +412,7 @@ class HomePageScreen extends GetView<HomePageController>{
           ),
           GestureDetector(
             onTap: () {
-/*              loginData.write("isLogged", false);
-              loginData.remove("role");
-              loginData.remove("userId");
-              loginData.remove("loginToken");*/
+              controller.loginDetailsRemoved();
               Get.toNamed(RoutesConstant.getRouteLogin());
             },
             child: Image.asset(

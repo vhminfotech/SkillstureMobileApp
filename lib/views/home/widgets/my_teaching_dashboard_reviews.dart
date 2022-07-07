@@ -56,6 +56,8 @@ class MyTeachingDashboardReviews extends StatelessWidget {
                     SizedBox(height: 5,),
                     Text(
                       "18 May 2022 8:30pm",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                       style: TextStyle(
                           fontSize: 12,
                           color: Color(0xFF707070),

@@ -7,6 +7,7 @@ import 'package:skillsture_project/controllers/auth/learner/register_controller.
 import '../../../constants/country_list.dart';
 import '../../../controllers/graphqlconfigs/mutation_query.dart';
 import '../../../controllers/navigation/routes_constant.dart';
+import '../../custom_widgets/fullScreenDialog.dart';
 import '../../custom_widgets/header_image.dart';
 
 class RegisterScreen extends GetView<RegisterController> {
@@ -66,6 +67,7 @@ class RegisterScreen extends GetView<RegisterController> {
           }
         },
         onError: (errorData) {
+          FullScreenDialog.cancelDialog();
           if(errorData!.linkException == null){
             print("Registered Error: $errorData");
             Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
@@ -129,6 +131,7 @@ class RegisterScreen extends GetView<RegisterController> {
           }
         },
         onError: (errorData) {
+          FullScreenDialog.cancelDialog();
           if(errorData!.linkException == null){
             print("Registered Error: $errorData");
             Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
@@ -205,6 +208,7 @@ class RegisterScreen extends GetView<RegisterController> {
           }
         },
         onError: (errorData) {
+          FullScreenDialog.cancelDialog();
           if(errorData!.linkException == null){
             print("Registered Error: $errorData");
             Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),

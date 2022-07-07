@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
     loginData.writeIfNull("isLogged", false);
     Future.delayed(Duration.zero, () async{
       loginData.read("isLogged") ? Get.toNamed(
-        RoutesConstant.getRouteHomePage(),
+        RoutesConstant.getRouteDashBoardPage(),
       ) : Get.toNamed(
         RoutesConstant.getRouteLogin(),
       );

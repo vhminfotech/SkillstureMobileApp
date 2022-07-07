@@ -1,13 +1,19 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:get_storage/get_storage.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:skillsture_project/constants/constants_utils.dart';
+import '../../../models/instructor_skills.dart';
+import '../../graphqlconfigs/graphql_provider.dart';
+import '../../graphqlconfigs/mutation_query.dart';
 import '../../navigation/routes_constant.dart';
 
 class InstructorRegisterThirdController extends GetxController {
   GlobalKey<FormState> instructorSignUpFormKeyThird = GlobalKey<FormState>();
-
-  late TextEditingController introductionController,
-      experienceController,teachingAreaController;
+  final GraphqlProviderClass graphqlProviderClass = GraphqlProviderClass();
+  late TextEditingController introductionController, experienceController;
 
   Rx<String> name = Rx<String>("");
   Rx<String> email = Rx<String>("");
@@ -21,6 +27,7 @@ class InstructorRegisterThirdController extends GetxController {
 
   var introduction = "";
   var experience = "";
+  var certification = "";
 
   final isAgree = Rx<bool>(false);
 
@@ -31,16 +38,39 @@ class InstructorRegisterThirdController extends GetxController {
 
   Rx<String> instructorRole = Rx<String>("");
 
+  final registerUserId = Rx<String>("");
+  final registerRole = Rx<String>("");
+  final registerToken = Rx<String>("");
+
+  final registerData = GetStorage();
+
+  late File certificateFile;
+
+  Rx<List<String>> selectedBottomSheetSkills = Rx<List<String>>([]);
+
+/*  final List<String> skillsList = [
+    "Accounting",
+    "Adobe Suites",
+    "Advertising and Marketing",
+    "Agile Business Analysis",
+    "B2B Sales",
+    "Computer & Technology",
+    "Creative Thinking",
+    "Digital Marketing",
+    "Ethical Hacking",
+  ];*/
+
+  Rx<List<InstructorSkill>> getAddSkills = Rx<List<InstructorSkill>>([]);
+  Rx<List<String>> getAddSkillsNew = Rx<List<String>>([]);
+
   @override
   void onInit() {
     super.onInit();
+    getSkillList();
     introductionController = TextEditingController();
     experienceController = TextEditingController();
-    teachingAreaController = TextEditingController();
     isAgree.value = false;
-/*    instructorRole.value = "${Get.arguments}";
-    print("Third Page");
-    print("${Get.arguments}");*/
+    //selectedBottomSheetSkills.value = skillsList;
     name.value = Get.arguments[0]["name"];
     email.value = Get.arguments[1]["email"];
     mobile.value = Get.arguments[2]["mobile"];
@@ -62,10 +92,48 @@ class InstructorRegisterThirdController extends GetxController {
     super.onClose();
     introductionController.dispose();
     experienceController.dispose();
-    teachingAreaController.dispose();
   }
 
-  void checkNextButtonThird(){
+  void getSkillList() async {
+    GraphQLClient _client = graphqlProviderClass.clientToQuery();
+    QueryResult result = await _client.query(
+      QueryOptions(
+        document: gql(MutationQuery().getInstructorSkillList),
+      ),
+    );
+    if (!result.hasException) {
+      print(result.toString());
+      print(result.data.toString());
+      var list = result.data!["teachingAreaSkills"]["allChildSkillRes"];
+      print("list:: "+list.length.toString());
+
+      for (int i = 0; i < list.length; i++) {
+        getAddSkills.value.add(
+          InstructorSkill(
+            list[i]["_id"],
+            list[i]["childSkillName"],
+          ),
+        );
+        print(getAddSkills.value[i].skillName);
+      }
+    }
+
+    for(int x=0; x<getAddSkills.value.length; x++){
+      getAddSkillsNew.value.add(getAddSkills.value[x].skillName);
+    }
+    print(getAddSkillsNew.toString());
+    selectedBottomSheetSkills.value = getAddSkillsNew.value;
+    print(selectedBottomSheetSkills.value.toString());
+  }
+
+  void registerDetailsStorage() {
+    registerData.write("isLogged", true);
+    registerData.write("role", registerRole.value);
+    registerData.write("userId", registerUserId.value);
+    registerData.write("loginToken", registerToken.value);
+  }
+
+  void checkNextButtonThird(RunMutation runMutation) {
     final isValidated = instructorSignUpFormKeyThird.currentState!.validate();
     if (isValidated) {
       if (isAgree.value == true) {
@@ -82,7 +150,28 @@ class InstructorRegisterThirdController extends GetxController {
         print(introduction);
         print(experience);
         print(teachingAreas.value.toString());
+        print(certification);
+
+        runMutation(
+          {
+            "fullName": name.value,
+            "email": email.value,
+            "mobile": mobile.value,
+            "password": password.value,
+            "address": address.value,
+            "socialProfile": socialProfile.value,
+            "companyOrInstructor": type.value,
+            "registerNumber": regNumber.value,
+            "companyWebsite": websiteCompany.value,
+            "introduction": introduction,
+            "experience": experience,
+            "teachingArea": teachingAreas.value,
+            "certification": certification
+          },
+        );
+
         Get.defaultDialog(
+          //TODO : Remove dialog from controller
           title: "",
           titleStyle: TextStyle(fontSize: 1.0),
           content: Container(
@@ -136,21 +225,9 @@ class InstructorRegisterThirdController extends GetxController {
                     elevation: 1.0,
                     onPressed: () {
                       print("Third Screen Dialog Box");
-                      Get.toNamed(RoutesConstant.routeFirstCourseList,
-                          arguments: "instructor"/*[
-                            {"name": name.value},
-                            {"email": email.value},
-                            {"mobile": mobile.value},
-                            {"password": password.value},
-                            {"address": address.value},
-                            {"socialProfile": socialProfile.value},
-                            {"type": type.value},
-                            {"regNumber": regNumber.value},
-                            {"websiteCompany": websiteCompany.value},
-                            {"introduction": introduction},
-                            {"experience": experience},
-                            {"teachingAreas": teachingAreas.value.toString()},
-                          ]*/);
+                      Get.toNamed(
+                        RoutesConstant.routeFirstCourseList,
+                      );
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(7.5),
@@ -166,22 +243,7 @@ class InstructorRegisterThirdController extends GetxController {
             ),
           ),
         );
-    /*    Get.toNamed(RoutesConstant.getRouteFirstCourseList(),
-            arguments: [
-              {"name": name.value},
-              {"email": email.value},
-              {"mobile": mobile.value},
-              {"password": password.value},
-              {"address": address.value},
-              {"socialProfile": socialProfile.value},
-              {"type": type.value},
-              {"regNumber": regNumber.value},
-              {"websiteCompany": websiteCompany.value},
-              {"introduction": introduction},
-              {"experience": experience},
-              {"teachingAreas": teachingAreas.value.toString()},
-            ]);*/
-      }else {
+      } else {
         print("Please accept the terms & conditions");
         Get.snackbar("Error", "Please accept the terms & conditions",
             snackPosition: SnackPosition.BOTTOM);
@@ -189,38 +251,84 @@ class InstructorRegisterThirdController extends GetxController {
     }
   }
 
-  String? validateTextFormFields(String value, String field){
-    if(value.isEmpty){
+  String? validateTextFormFields(String value, String field) {
+    if (value.isEmpty) {
       return "Please enter a ${field}";
     }
     return null;
   }
 
-  void isTermsAgreed(){
+  void isTermsAgreed() {
     isAgree.value = !isAgree.value;
   }
 
-  void addChipItem(String value){
-    if(value.isEmpty){
+  void addChipItem(String value) {
+    if (value.isEmpty) {
       print(value);
       return;
-    }else if(teachingAreas.value.contains(value)){
-      Get.snackbar("Error", "Teaching area already exit", snackPosition: SnackPosition.BOTTOM);
-      return;
-    }else{
-        teachingAreas.value.add(value);
-        teachingAreaController.clear();
-        teachingAreas.value = teachingAreas.value;
-        teachingAreas.refresh();
-        print(teachingAreas.value);
-
-    }
-  }
-
-  void removeChipItem(int index){
-      teachingAreas.value.removeAt(index);
+    } else if (teachingAreas.value.contains(value)) {
+      teachingAreas.value.remove(value);
+      teachingAreas.value = teachingAreas.value;
+      teachingAreas.refresh();
+    } else {
+      teachingAreas.value.add(value);
       teachingAreas.value = teachingAreas.value;
       teachingAreas.refresh();
       print(teachingAreas.value);
+    }
+  }
+
+  void removeChipItem(int index) {
+    teachingAreas.value.removeAt(index);
+    teachingAreas.value = teachingAreas.value;
+    teachingAreas.refresh();
+    print(teachingAreas.value);
+  }
+
+  bool selectToChangeColour(String CourseColorChange) {
+    if (teachingAreas.value.contains(CourseColorChange)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void searchSkills(String skillTitle) {
+    List<String> resultCourse = [];
+    if (skillTitle.isEmpty) {
+      resultCourse = getAddSkillsNew.value;
+    } else {
+      resultCourse = getAddSkillsNew.value
+          .where((element) =>
+              element.toLowerCase().contains(skillTitle.toLowerCase()))
+          .toList();
+    }
+    selectedBottomSheetSkills.value = resultCourse;
+  }
+
+  void uploadCertificatePressed(RunMutation runMutation) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      var fileSelected = result.files.first;
+      certificateFile = File(result.files.first.path!);
+      var byteData = certificateFile.readAsBytesSync();
+      var multipartSelectedFile = ConstantUtils.convertSelectedFile(
+          byteData, result.files.first.name, result.files.first.extension!);
+      print(fileSelected.name);
+      print(fileSelected.size);
+      print(fileSelected.extension);
+      print(fileSelected.path);
+      print(fileSelected.toString());
+
+      runMutation(
+        {
+          "files": multipartSelectedFile,
+        },
+      );
+    } else {
+      // User canceled the picker
+      print("Mutation Failed");
+      print("Please select the file");
+    }
   }
 }

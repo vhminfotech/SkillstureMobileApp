@@ -178,6 +178,7 @@ class RegisterController extends GetxController {
         print(mobile);
         print(password);
         print(confirmPassword);
+        FullScreenDialog.showDialog();
         runMutation(
           {
             "fullName": name,
@@ -198,7 +199,7 @@ class RegisterController extends GetxController {
     final googleUser = await GoogleSignIn(scopes: <String>['email']).signIn();
     FullScreenDialog.showDialog();
 
-    try {
+    /*try {*/
       final googleAuth = await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
@@ -221,7 +222,7 @@ class RegisterController extends GetxController {
 /*      Get.toNamed(
         RoutesConstant.getRouteHomePage(),
       );*/
-    } catch (e) {
+    /*} catch (e) {
       print(e.toString());
       FullScreenDialog.cancelDialog();
       Get.snackbar("Exception", e.toString(),
@@ -229,19 +230,19 @@ class RegisterController extends GetxController {
       Get.toNamed(
         RoutesConstant.getRouteLogin(),
       );
-    }
+    }*/
   }
 
   void facebookSignUpPressed(RunMutation runMutation) async {
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
-    FullScreenDialog.showDialog();
+    //FullScreenDialog.showDialog();
 
-    try {
+    /*try {*/
       final OAuthCredential facebookAuthCredential =
       FacebookAuthProvider.credential(loginResult.accessToken!.token);
       if (facebookAuthCredential.accessToken == null) {
-        FullScreenDialog.cancelDialog();
+        //FullScreenDialog.cancelDialog();
         Get.back();
       } else {
 
@@ -258,12 +259,12 @@ class RegisterController extends GetxController {
 
         await FirebaseAuth.instance
             .signInWithCredential(facebookAuthCredential);
-        FullScreenDialog.cancelDialog();
+        //FullScreenDialog.cancelDialog();
 /*        Get.toNamed(
           RoutesConstant.getRouteHomePage(),
         );*/
       }
-    } catch (e) {
+    /*} catch (e) {
       print(e.toString());
       FullScreenDialog.cancelDialog();
       Get.snackbar("Exception", e.toString(),
@@ -271,6 +272,6 @@ class RegisterController extends GetxController {
       Get.toNamed(
         RoutesConstant.getRouteLogin(),
       );
-    }
+    }*/
   }
 }

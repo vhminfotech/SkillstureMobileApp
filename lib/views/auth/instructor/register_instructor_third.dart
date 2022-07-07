@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:skillsture_project/controllers/auth/instructor/instructor_register_third_controller.dart';
 
 import '../../../constants/constants_utils.dart';
+import '../../../controllers/graphqlconfigs/mutation_query.dart';
 import '../../../controllers/navigation/routes_constant.dart';
 import '../../custom_widgets/header_image.dart';
 
@@ -23,9 +25,11 @@ class RegisterInstructorThirdScreen
                 _getIntroductionTextField(),
                 _getExperienceTextField(),
                 _getTeachingAreaTextField(),
-                _getCertificationTextField(),
+                _getCertificateUploadMutation(),
+                //_getCertificationTextField(),
                 _getTermsAndCondition(),
-                _getSignUpButton(),
+                _getSignUpInstructorMutation(),
+                //_getSignUpButton(),
                 _getBackButton(),
                 _getLogin(),
               ],
@@ -36,7 +40,115 @@ class RegisterInstructorThirdScreen
     );
   }
 
-  Widget _getCertificationTextField() {
+  Widget _getCertificateUploadMutation() {
+    return Mutation(
+      options: MutationOptions(
+        document: gql(MutationQuery().uploadCertificate),
+        onCompleted: (resultData) {
+          if (resultData == null || resultData == "undefined") {
+            print("Upload Failed");
+            return;
+          } else {
+            print("Certificate URL");
+            print("!!!!!!!!!!!!!!!!");
+            print(resultData["uploadFile"]["uri"]);
+            controller.certification =
+                resultData["uploadFile"]["uri"].toString();
+
+            print(resultData.toString());
+          }
+        },
+        onError: (errorData) {
+          if (errorData!.linkException == null) {
+            print("Certificate Error: $errorData");
+            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
+                snackPosition: SnackPosition.BOTTOM);
+          } else if (errorData.linkException != null) {
+            print("Certificate Error: $errorData");
+            Get.snackbar("Error", "Please check your connection",
+                snackPosition: SnackPosition.BOTTOM);
+          } else {
+            print("Certificate Error: $errorData");
+            Get.snackbar("Error", "Upload Failed",
+                snackPosition: SnackPosition.BOTTOM);
+          }
+        },
+      ),
+      builder: (runMutation, results) {
+        return _getCertificationTextField(runMutation);
+      },
+    );
+  }
+
+  Widget _getSignUpInstructorMutation() {
+    return Mutation(
+      options: MutationOptions(
+        document: gql(MutationQuery().registerAsInstructor),
+        onCompleted: (resultData) {
+          if (resultData == null || resultData == "undefined") {
+            print("Instructor Registration Failed");
+            return;
+          } else {
+            print("Instructor Registration Token");
+            print("!!!!!!!!!!!!!!!!");
+            print(resultData["signupInstructor"]["role"]);
+            print(resultData["signupInstructor"]["token"]);
+            print(resultData["signupInstructor"]["userId"]);
+            controller.registerUserId.value =
+                resultData["signupInstructor"]["userId"].toString();
+            controller.registerRole.value =
+                resultData["signupInstructor"]["role"].toString();
+            controller.registerToken.value =
+                resultData["signupInstructor"]["token"].toString();
+            controller.registerDetailsStorage();
+          }
+        },
+        onError: (errorData) {
+          if (errorData!.linkException == null) {
+            print("Instructor Registration Error: $errorData");
+            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
+                snackPosition: SnackPosition.BOTTOM);
+          } else if (errorData.linkException != null) {
+            print("Instructor Registration Error: $errorData");
+            Get.snackbar("Error", "Please check your connection",
+                snackPosition: SnackPosition.BOTTOM);
+          } else {
+            print("Instructor Registration Error: $errorData");
+            Get.snackbar("Error", "Instructor Registration Failed",
+                snackPosition: SnackPosition.BOTTOM);
+          }
+        },
+      ),
+      builder: (runMutation, results) {
+        return _getSignUpButton(runMutation);
+      },
+    );
+  }
+
+  Widget _getSignUpButton(RunMutation runMutation) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
+      child: RaisedButton(
+        color: Color(0xFFF05A28),
+        textColor: Colors.white,
+        elevation: 1.0,
+        onPressed: () {
+          controller.checkNextButtonThird(runMutation);
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.5),
+        ),
+        child: Text(
+          "Sign Up",
+          style: TextStyle(fontSize: 18.0, fontFamily: "Comfortaa-Bold"),
+        ),
+      ),
+    );
+  }
+
+  Widget _getCertificationTextField(RunMutation runMutation) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -59,7 +171,9 @@ class RegisterInstructorThirdScreen
           Row(
             children: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.uploadCertificatePressed(runMutation);
+                },
                 child: Container(
                   height: 40,
                   width: 110,
@@ -112,9 +226,13 @@ class RegisterInstructorThirdScreen
     List<Widget> chips = [
       TextButton(
         onPressed: () {
+          Get.bottomSheet(
+            _getStatusBottomSheet(),
+            enableDrag: false,
+          );
           //controller.values.value.add(controller.teachingAreaController.text.toString());
-          controller
-              .addChipItem(controller.teachingAreaController.text.toString());
+          /*controller
+              .addChipItem(controller.teachingAreaController.text.toString());*/
         },
         child: const Text(
           "Add",
@@ -134,12 +252,12 @@ class RegisterInstructorThirdScreen
             Radius.circular(7),
           ),
         ),
-        labelPadding: const EdgeInsets.all(7),
+        labelPadding: const EdgeInsets.all(5),
         backgroundColor: const Color(0xFFFEEDC5),
         label: Text(
           controller.teachingAreas.value[i],
           style: const TextStyle(
-              fontSize: 18.0,
+              fontSize: 16.0,
               color: Color(0xFF262261),
               fontFamily: "Comfortaa-Regular"),
         ),
@@ -150,6 +268,100 @@ class RegisterInstructorThirdScreen
       chips.insert(0, actionChip);
     }
     return chips.map((e) => e).toList();
+  }
+
+  Widget _getStatusBottomSheet() {
+    return Container(
+      color: Colors.white,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            ListTile(
+              title: Text(
+                "Add Skills",
+                style: const TextStyle(
+                  fontSize: 22.0,
+                  color: Color(0xFF262261),
+                  fontFamily: "Cocogoose-Regular",
+                ),
+              ),
+              trailing: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.close,
+                  color: Color(0xFF262261),
+                  size: 30,
+                ),
+              ),
+            ),
+            _getSearchView(),
+            ListView.separated(
+              itemCount: controller.selectedBottomSheetSkills.value.length,
+              shrinkWrap: true,
+              primary: false,
+              padding: const EdgeInsets.all(5),
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    //controller.checkedBottomStatusColor(index);
+                    controller.addChipItem(controller
+                        .selectedBottomSheetSkills.value[index]
+                        .toString());
+                    print(controller.teachingAreas.value);
+                    print(controller.selectedBottomSheetSkills.value[index]);
+                  },
+                  child: Obx(
+                    () => ListTile(
+                      title: Text(
+                        controller.selectedBottomSheetSkills.value[index],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 4,
+                        style: const TextStyle(
+                          fontSize: 16.0,
+                          color: Color(0xFF262261),
+                          fontFamily: "Comfortaa-Regular",
+                        ),
+                      ),
+                      trailing: controller.selectToChangeColour(
+                              controller.selectedBottomSheetSkills.value[index])
+                          ? Image.asset(
+                              "assets/images/checkbox@2x.png",
+                              //color: Colors.deepOrangeAccent,
+                              height: 20,
+                              width: 20,
+                            )
+                          : Container(
+                              //color: Colors.deepOrangeAccent,
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(3.0),
+                                ),
+                                border: Border.all(color: Colors.grey),
+                              ),
+                            ),
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  height: 1,
+                  color: Colors.grey.shade400,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _getTeachingAreaTextField() {
@@ -180,23 +392,56 @@ class RegisterInstructorThirdScreen
               children: buildChips(),
             ),
           ),
-          TextFormField(
-            style: const TextStyle(
-                fontSize: 20.0,
-                color: Color(0xFF262261),
-                fontFamily: "Comfortaa-Medium"),
-            textInputAction: TextInputAction.next,
-            decoration: const InputDecoration(
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFFFB451), width: 2),
-              ),
-              focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFFFB451), width: 2),
-              ),
-            ),
-            controller: controller.teachingAreaController,
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            width: double.infinity,
+            height: 2,
+            color: Color(0xFFFFB451),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _getSearchView() {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, top: 10.0, right: 20, bottom: 20),
+      child: TextFormField(
+        onChanged: (value) {
+          print(value.toString());
+          controller.searchSkills(value);
+        },
+        style: const TextStyle(
+          fontSize: 18.0,
+          color: Colors.black45,
+          fontFamily: "Comfortaa-Regular",
+        ),
+        cursorColor: Colors.black45,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.black45,
+          ),
+          hintText: "Search...",
+          hintStyle: TextStyle(color: Colors.grey),
+          focusColor: Colors.black45,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.grey,
+              width: 1,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: Colors.black45,
+              width: 1,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -316,101 +561,6 @@ class RegisterInstructorThirdScreen
               color: Color(0xFFF05A28),
               fontSize: 18.0,
               fontFamily: "Comfortaa-Bold"),
-        ),
-      ),
-    );
-  }
-
-  Widget _getSignUpButton() {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 10),
-      child: RaisedButton(
-        color: Color(0xFFF05A28),
-        textColor: Colors.white,
-        elevation: 1.0,
-        onPressed: () {
-          controller.checkNextButtonThird();
-/*          Get.defaultDialog(
-            title: "",
-            titleStyle: TextStyle(fontSize: 1.0),
-            content: Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/astronaut@2x.png',
-                    height: 110,
-                    width: 110,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Text(
-                    "Thank you! We got \nyour application.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontFamily: "Cocogoose-Regular",
-                      color: Color(0xFF262261),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Thank you for signing up as an instructor. We will review your submission and once approved we will notify you through email. As for now you can log in as a learner to explore SKILLSTURE.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        height: 1.3,
-                        fontSize: 15.0,
-                        fontFamily: "Comfortaa-Regular",
-                        color: Color(0xFF262261),
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 45,
-                    width: 70,
-                    child: RaisedButton(
-                      color: const Color(0xFFF05A28),
-                      textColor: Colors.white,
-                      elevation: 1.0,
-                      onPressed: () {
-                        print("Third Screen Dialog Box");
-                        print(controller.instructorRole.value);
-                        Get.toNamed(RoutesConstant.routeFirstCourseList,
-                            arguments: controller.instructorRole.value);
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.5),
-                      ),
-                      child: Text(
-                        "OK",
-                        style: const TextStyle(
-                            fontSize: 16.0, fontFamily: "Comfortaa-Bold"),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );*/
-        },
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(7.5),
-        ),
-        child: Text(
-          "Sign Up",
-          style: TextStyle(fontSize: 18.0, fontFamily: "Comfortaa-Bold"),
         ),
       ),
     );

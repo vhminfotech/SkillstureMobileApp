@@ -16,7 +16,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordState extends State<ForgotPasswordScreen> {
   final FocusNode _emailFocus = FocusNode();
 
-  final GlobalKey<FormState> _key = GlobalKey();
+  GlobalKey<FormState> _key = GlobalKey();
 
   late String _email;
   final bool _messageVisible = false;

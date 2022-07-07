@@ -60,7 +60,8 @@ class WhatsNewItem extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            RatingBar.builder(
+            RatingBar(
+              ignoreGestures: true,
               itemSize: 25,
               initialRating: 3,
               minRating: 1,
@@ -68,9 +69,22 @@ class WhatsNewItem extends StatelessWidget {
               allowHalfRating: true,
               itemCount: 5,
               itemPadding: const EdgeInsets.symmetric(horizontal: 3.0),
-              itemBuilder: (context, _) => const Icon(
-                Icons.star,
-                color: Color(0xFFFFB451),
+              ratingWidget: RatingWidget(
+                full: Image.asset(
+                  'assets/images/star@2x_full.png',
+                  height: 10,
+                  width: 10,
+                ),
+                half: Image.asset(
+                  'assets/images/star@2x_half.png',
+                  height: 10,
+                  width: 10,
+                ),
+                empty: Image.asset(
+                  'assets/images/star@2x_empty.png',
+                  height: 10,
+                  width: 10,
+                ),
               ),
               onRatingUpdate: (rating) {
                 print(rating);

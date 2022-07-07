@@ -102,7 +102,7 @@ class RegisterInstructorFirstScreen extends GetView<InstructorRegisterFirstContr
         child: FlatButton(
           padding: const EdgeInsets.all(10),
           onPressed: () {
-            Get.toNamed(RoutesConstant.getRouteLogin());
+            Get.offNamed(RoutesConstant.getRouteLogin());
           },
           child: RichText(
             text: const TextSpan(
@@ -139,9 +139,6 @@ class RegisterInstructorFirstScreen extends GetView<InstructorRegisterFirstContr
         elevation: 1.0,
         onPressed: () {
           controller.checkNextButtonFirst();
-          /*print("First Screen: ${Get.arguments}");
-          Get.toNamed(RoutesConstant.getRouteRegisterInstructorSecond(),
-          arguments: "${Get.arguments}" );*/
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.5),

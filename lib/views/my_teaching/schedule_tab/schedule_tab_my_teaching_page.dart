@@ -75,6 +75,7 @@ class ScheduleTabMyTeachingPageScreen
       child: Obx(
         () => ListView.builder(
           shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: controller.scheduleLiveStreamModel.value.length,
           itemBuilder: (_, index) => GestureDetector(
             onTap: () {

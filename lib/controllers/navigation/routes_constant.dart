@@ -6,6 +6,7 @@ import 'package:skillsture_project/models/bindings/home_page_binding.dart';
 import 'package:skillsture_project/models/bindings/instructor_register_binding.dart';
 import 'package:skillsture_project/models/bindings/instructor_register_third_binding.dart';
 import 'package:skillsture_project/models/bindings/login_binding.dart';
+import 'package:skillsture_project/models/bindings/performance_view_reviews_page_binding.dart';
 import 'package:skillsture_project/models/bindings/schedule_livestream_detail_page_binding.dart';
 import 'package:skillsture_project/views/dashboard/dashboard_page.dart';
 import 'package:skillsture_project/views/home/ui/homepage_instructor.dart';
@@ -18,7 +19,8 @@ import 'package:skillsture_project/splash.dart';
 import 'package:skillsture_project/views/more/more_page.dart';
 import 'package:skillsture_project/views/my_learning/my_learning_page.dart';
 import 'package:skillsture_project/views/my_teaching/dashboard_tab_my_teaching_page.dart';
-import 'package:skillsture_project/views/my_teaching/livestream_detail_page.dart';
+import 'package:skillsture_project/views/my_teaching/performance_tab/view_reviews_page.dart';
+import 'package:skillsture_project/views/my_teaching/schedule_tab/livestream_detail_page.dart';
 import 'package:skillsture_project/views/search/search_page.dart';
 import '../../models/bindings/dashboard_page_binding.dart';
 import '../../models/bindings/explore_skill_binding.dart';
@@ -55,6 +57,7 @@ class RoutesConstant {
   static String routeMyLearningPage = "/routeMyLearningPage";
   static String routeMorePage = "/routeMorePage";
   static String routeLivestreamDetailPage = "/routeLivestreamDetailPage";
+  static String routeViewReviewsPage = "/routeViewReviewsPage";
 
   static String getRouteLaunch() => routeLaunch;
 
@@ -98,6 +101,8 @@ class RoutesConstant {
   static String getRouteMorePage() => routeMorePage;
 
   static String getRouteLivestreamDetailPage() => routeLivestreamDetailPage;
+
+  static String getRouteViewReviewsPage() => routeViewReviewsPage;
 
   static List<GetPage> routes = [
     GetPage(name: routeLaunch, page: () => SplashScreen()),
@@ -146,7 +151,6 @@ class RoutesConstant {
         name: routeDashBoardPage,
         page: () => DashboardPageScreen(),
         binding: DashBoardPageBinding()),
-
     GetPage(name: routeSearchPage, page: () => SearchPageScreen()),
     GetPage(name: routeMyTeachingPage, page: () => MyTeachingPageScreen()),
     GetPage(name: routeMyLearningPage, page: () => MyLearningPageScreen()),
@@ -155,7 +159,13 @@ class RoutesConstant {
     GetPage(
       name: routeLivestreamDetailPage,
       page: () => LivestreamDetailPageScreen(),
-      binding: scheduleLivestreamDetailPageBinding(),
-    )
+      binding: ScheduleLivestreamDetailPageBinding(),
+    ),
+
+    GetPage(
+      name: routeViewReviewsPage,
+      page: () => ViewReviewsPageScreen(),
+      binding: PerformanceViewReviewsPageBinding(),
+    ),
   ];
 }

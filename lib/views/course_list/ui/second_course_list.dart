@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:skillsture_project/controllers/course_list/second_list_controller.dart';
 
-import '../../../controllers/navigation/routes_constant.dart';
+import '../../../models/quiz_two_skill_list.dart';
+
 
 class SecondCourseListScreen extends GetView<SecondListController> {
   @override
@@ -49,7 +50,7 @@ class SecondCourseListScreen extends GetView<SecondListController> {
                 return InkWell(
                   onTap: () {
                     controller.selectedSecondListCourse(
-                        controller.searchCourseSecond.value[index].toString());
+                        controller.searchCourseSecond.value[index]);
                     Get.bottomSheet(
                       _showBottomSheet(),
                       enableDrag: false,
@@ -79,7 +80,9 @@ class SecondCourseListScreen extends GetView<SecondListController> {
                       ),
                       child: ListTile(
                         title: Text(
-                          controller.searchCourseSecond.value[index],
+                          controller.searchCourseSecond.value[index].childSkillName,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               color: Colors.white,
@@ -154,7 +157,7 @@ class SecondCourseListScreen extends GetView<SecondListController> {
     );
   }
 
-  Widget _getSelectedListItems(String courseName) => Container(
+  Widget _getSelectedListItems(QuizTwoSkillList courseName) => Container(
         margin: const EdgeInsets.all(10.0),
         height: 40,
         child: Container(
@@ -173,7 +176,7 @@ class SecondCourseListScreen extends GetView<SecondListController> {
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Text(
-                  courseName,
+                  courseName.childSkillName,
                   style: const TextStyle(
                       color: Color(0xff262261),
                       fontFamily: "Comfortaa-Regular",
@@ -209,9 +212,6 @@ class SecondCourseListScreen extends GetView<SecondListController> {
           onPressed: () {
             print("Second List Dialog");
             controller.nextButtonPressed();
-/*            print(controller.roleInstructorSecond.value);
-            Get.toNamed(RoutesConstant.getRouteHomePage(),
-                arguments: controller.roleInstructorSecond.value);*/
           },
           child: const Text(
             "Next",

@@ -8,7 +8,9 @@ import 'package:skillsture_project/controllers/my_teaching/performance_tab_my_te
 import 'package:skillsture_project/controllers/my_teaching/schedule_tab_my_teaching_controller.dart';
 import 'package:skillsture_project/controllers/search/search_controller.dart';
 
+import '../../controllers/my_teaching/payout_tab_my_teaching_controller.dart';
 import '../../controllers/my_teaching/performance_tab_second_my_teaching_controller.dart';
+import '../../controllers/my_teaching/revenue_tab_my_teaching_controller.dart';
 
 class DashBoardPageBinding extends Bindings {
   @override
@@ -24,5 +26,7 @@ class DashBoardPageBinding extends Bindings {
         PerformanceTabMyTeachingController());
     Get.put<PerformanceTabSecondMyTeachingController>(
         PerformanceTabSecondMyTeachingController());
+    Get.put<RevenueTabMyTeachingController>(RevenueTabMyTeachingController());
+    Get.put<PayoutTabMyTeachingController>(PayoutTabMyTeachingController());
   }
 }

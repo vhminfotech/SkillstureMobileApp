@@ -10,7 +10,7 @@ class CheckYourMailScreen extends StatefulWidget {
 }
 
 class _CheckYourMailState extends State<CheckYourMailScreen> {
-  final GlobalKey<FormState> _key = GlobalKey();
+  GlobalKey<FormState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {

@@ -25,7 +25,7 @@ class PerformanceTabMyTeachingPageScreen
                         child: Text(
                           "Performance",
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF262261),
                               fontFamily: "Cocogoose-Bold"),
@@ -33,7 +33,7 @@ class PerformanceTabMyTeachingPageScreen
                       ),
                       subtitle: Text("31 May 2022 - 06 Jun 2022",
                           style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 12,
                               color: Color(0xFF262261),
                               fontFamily: "Comfortaa-Bold")),
                     ),
@@ -48,21 +48,21 @@ class PerformanceTabMyTeachingPageScreen
                           );*/
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.all(2.0),
                         child: Row(
                           children: [
                             Text(
                               "Last 7 days",
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFF262261),
                                   fontFamily: "Comfortaa-Bold"),
                             ),
                             Icon(
                               Icons.arrow_drop_down_outlined,
-                              size: 30,
+                              size: 25,
                               color: Color(0xFF262261),
                             ),
                           ],
@@ -126,7 +126,7 @@ class PerformanceTabMyTeachingPageScreen
           Container(
               child: SizedBox(
             height: 30,
-          )),
+          ),),
           Container(
             margin: EdgeInsets.only(left: 20, right: 20),
             child: Align(
@@ -243,6 +243,7 @@ class PerformanceTabMyTeachingPageScreen
       child: Obx(
         () => ListView.builder(
           shrinkWrap: true,
+          physics: ClampingScrollPhysics(),
           itemCount: controller.performanceLiveStreamModel.value.length,
           itemBuilder: (_, index) => GestureDetector(
             onTap: () {
@@ -259,7 +260,6 @@ class PerformanceTabMyTeachingPageScreen
             ),
           ),
           scrollDirection: Axis.vertical,
-          //physics: NeverScrollableScrollPhysics(),
         ),
       ),
     );

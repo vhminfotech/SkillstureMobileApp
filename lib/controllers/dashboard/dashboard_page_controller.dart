@@ -20,16 +20,8 @@ class DashboardPageController extends GetxController {
   void onInit() {
     super.onInit();
     selectedItemIndex.value = 0;
-    isRoleInstructor.value = true;
-
-/*    if("${Get.arguments}" == "instructor"){
-      print("${Get.arguments}");
-      isRoleInstructor.value = true;
-      print(isRoleInstructor.toString());
-    }else{
-      print(isRoleInstructor.toString());
-      isRoleInstructor.value = false;
-    }*/
+    isRoleInstructor.value = false;
+    userRoleChecked();
   }
 
   @override
@@ -40,6 +32,16 @@ class DashboardPageController extends GetxController {
   @override
   void onClose(){
     super.onClose();
+  }
+
+  void userRoleChecked(){
+    if(loginData.read("role") == "instructor"){
+      isRoleInstructor.value = true;
+      print(isRoleInstructor.toString());
+    }else{
+      isRoleInstructor.value = false;
+      print(isRoleInstructor.toString());
+    }
   }
 
   void onItemTapped(int index){

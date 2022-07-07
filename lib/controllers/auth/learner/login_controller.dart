@@ -7,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../views/custom_widgets/fullScreenDialog.dart';
-import '../../navigation/routes_constant.dart';
+
 
 class LoginController extends GetxController {
 
@@ -84,7 +84,7 @@ class LoginController extends GetxController {
 
         print(email);
         print(password);
-
+        FullScreenDialog.showDialog();
         runMutation(
           {
             "email": email,
@@ -95,6 +95,7 @@ class LoginController extends GetxController {
   }
 
   void googleLoginPressed(RunMutation runMutation) async {
+    // TODO: Add loading stage while google nd facebook auth.
     final googleUser = await GoogleSignIn(scopes: <String>['email']).signIn();
     FullScreenDialog.showDialog();
 
@@ -116,20 +117,19 @@ class LoginController extends GetxController {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
-     FullScreenDialog.cancelDialog();
+     //FullScreenDialog.cancelDialog();
 
   }
 
   void facebookLoginPressed(RunMutation runMutation) async {
     final LoginResult loginResult = await FacebookAuth.instance.login();
+    //FullScreenDialog.showDialog();
 
-    FullScreenDialog.showDialog();
-
-    try {
+    /*try {*/
       final OAuthCredential facebookAuthCredential =
       FacebookAuthProvider.credential(loginResult.accessToken!.token);
       if (facebookAuthCredential.accessToken == null) {
-        FullScreenDialog.cancelDialog();
+        //FullScreenDialog.cancelDialog();
         Get.back();
       } else {
 
@@ -146,18 +146,18 @@ class LoginController extends GetxController {
 
         await FirebaseAuth.instance
             .signInWithCredential(facebookAuthCredential);
-        FullScreenDialog.cancelDialog();
+        //FullScreenDialog.cancelDialog();
 
       }
-    } catch (e) {
+    /*} catch (e) {
       print(e.toString());
-      FullScreenDialog.cancelDialog();
+      //FullScreenDialog.cancelDialog();
       Get.snackbar("Exception", e.toString(),
           snackPosition: SnackPosition.BOTTOM);
       Get.toNamed(
         RoutesConstant.getRouteLogin(),
       );
-    }
+    }*/
   }
 
 }

@@ -2,7 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:skillsture_project/controllers/my_teaching/my_teaching_controller.dart';
+import 'package:skillsture_project/views/my_teaching/payout_tab/payout_tab_my-teaching_page.dart';
 import 'package:skillsture_project/views/my_teaching/performance_tab/performance_tab_my_teaching_page.dart';
+import 'package:skillsture_project/views/my_teaching/revenue_tab/revenue_tab_my_teaching_page.dart';
 import 'package:skillsture_project/views/my_teaching/schedule_tab/schedule_tab_my_teaching_page.dart';
 import '../../controllers/navigation/routes_constant.dart';
 import '../../models/utils.dart';
@@ -75,15 +77,11 @@ class MyTeachingPageScreen extends GetView<MyTeachingPageController> {
   }
 
   Widget _getPayoutView() {
-    return Container(
-      color: Colors.grey,
-    );
+     return PayoutTabMyTeachingPageScreen();
   }
 
   Widget _getRevenueView() {
-    return Container(
-      color: Colors.blueGrey,
-    );
+    return RevenueTabMyTeachingPageScreen();
   }
 
   Widget _getPerformanceView() {
@@ -251,6 +249,8 @@ class MyTeachingPageScreen extends GetView<MyTeachingPageController> {
               child: Container(
                 margin: EdgeInsets.all(20),
                 child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
                   itemCount: 3,
                   separatorBuilder: (BuildContext context, int index) {
                     return Container(
@@ -313,6 +313,8 @@ class MyTeachingPageScreen extends GetView<MyTeachingPageController> {
               child: Container(
                 margin: EdgeInsets.all(20),
                 child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
                   itemCount: 3,
                   separatorBuilder: (BuildContext context, int index) {
                     return Container(

@@ -58,13 +58,7 @@ class InstructorRegisterFirstController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    nameController.dispose();
-    emailController.dispose();
-    mobileController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    addressController.dispose();
-    socialProfileController.dispose();
+
   }
 
   bool isPasswordToggle() {

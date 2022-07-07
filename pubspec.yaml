@@ -45,6 +45,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   country_code_picker: ^2.0.2
   fl_chart: ^0.50.5
+  file_picker: ^4.6.1
 
 dev_dependencies:
   flutter_test:
@@ -129,6 +130,11 @@ flutter:
     - assets/images/graphics_views@2x.png
     - assets/images/graphics_followers@2x.png
     - assets/images/like@2x.png
+    - assets/images/background-illustration-more1@2x.png
+    - assets/images/checkbox@2x.png
+    - assets/images/star@2x_empty.png
+    - assets/images/star@2x_full.png
+    - assets/images/star@2x_half.png
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see

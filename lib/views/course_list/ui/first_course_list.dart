@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/course_list/first_list_controller.dart';
 import '../../../controllers/navigation/routes_constant.dart';
+import '../../../models/quiz_one_skill_list.dart';
 
 class FirstCourseListScreen extends GetView<FirstListController> {
   @override
@@ -49,12 +50,13 @@ class FirstCourseListScreen extends GetView<FirstListController> {
                 return InkWell(
                   onTap: () {
                     controller.selectedFirstListCourse(
-                        controller.searchCourse.value[index].toString());
+                        controller.searchCourse.value[index]);
                     Get.bottomSheet(
                       _showBottomSheet(),
                       enableDrag: false,
                     );
-                    print(controller.searchCourse.value[index]);
+                    print(controller.searchCourse.value[index].skillName);
+                    print(controller.searchCourse.value[index].skillId);
                   },
                   child: Obx(
                     () => Container(
@@ -77,7 +79,7 @@ class FirstCourseListScreen extends GetView<FirstListController> {
                       ),
                       child: ListTile(
                         title: Text(
-                          controller.searchCourse.value[index],
+                          controller.searchCourse.value[index].skillName,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                               color: Colors.white,
@@ -149,7 +151,7 @@ class FirstCourseListScreen extends GetView<FirstListController> {
     );
   }
 
-  Widget _getSelectedListItems(String courseName) => Container(
+  Widget _getSelectedListItems(QuizOneSkillList courseName) => Container(
         margin: const EdgeInsets.all(10.0),
         height: 40,
         child: Container(
@@ -168,7 +170,7 @@ class FirstCourseListScreen extends GetView<FirstListController> {
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Text(
-                  courseName,
+                  courseName.skillName,
                   style: const TextStyle(
                       color: Color(0xff262261),
                       fontFamily: "Comfortaa-Regular",
@@ -204,11 +206,6 @@ class FirstCourseListScreen extends GetView<FirstListController> {
           onPressed: () {
             print("First List Dialog");
             controller.nextButtonPressed();
-/*            print(controller.roleInstructor.value);
-            Get.toNamed(
-              RoutesConstant.getRouteSecondCourseList(),
-              arguments: controller.roleInstructor.value
-            );*/
           },
           child: const Text(
             "Next",

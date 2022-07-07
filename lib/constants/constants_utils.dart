@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import "package:http/http.dart" show MultipartFile;
+import "package:http_parser/http_parser.dart" show MediaType;
 
 class ConstantUtils{
   static InputDecoration styleInputDecoration(String label) {
@@ -32,5 +34,17 @@ class ConstantUtils{
         fontSize: 12,
         color: Color(0xFF262261),
         fontFamily: "Comfortaa-Regular");
+  }
+
+  static MultipartFile convertSelectedFile(var byteData, String fileName, String fileType){
+
+    var multipartFile = MultipartFile.fromBytes(
+      'files',
+      byteData,
+      filename: fileName,
+      contentType: MediaType("files",fileType),
+    );
+
+    return multipartFile;
   }
 }

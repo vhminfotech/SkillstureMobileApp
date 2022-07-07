@@ -21,7 +21,7 @@ class InstructorRegisterSecondController extends GetxController{
 
   var type = "";
   var regNumber = "";
-  var websiteCompany = "";
+  var websiteCompany = "NA";
 
   List<String> bottomSheetItem = ["Company", "Individual"];
 
@@ -64,6 +64,7 @@ class InstructorRegisterSecondController extends GetxController{
     regNumberController.dispose();
     websiteController.dispose();
   }
+
 
   String? validateRegNumber(String value){
     if(value.isEmpty){

@@ -1,46 +1,30 @@
 import 'package:get/get.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import '../../models/quiz_two_skill_list.dart';
+import '../graphqlconfigs/graphql_provider.dart';
+import '../graphqlconfigs/mutation_query.dart';
 import '../navigation/routes_constant.dart';
 
 class SecondListController extends GetxController{
+  final GraphqlProviderClass graphqlProviderClass = GraphqlProviderClass();
 
+  Rx<List<QuizTwoSkillList>> searchCourseSecond = Rx<List<QuizTwoSkillList>>([]);
 
-  final List<String> courseItemsSecond = [
-    "Application Programming Interface",
-    "Cloud Security",
-    "Cloud Computing(Google Cloud)",
-    "Cloud Computing(Microsoft Azure)",
-    "Cloud Computing(Amazon Web Server)",
-    "Digital Forensics",
-    "Ethical Hacking",
-    "Javascript",
-    "Machine Learning",
-    "Programming with python",
-    "Advanced Application Programming Interface ",
-    "Advanced Cloud Security",
-    "Advanced Cloud Computing(Google Cloud)",
-    "Advanced Cloud Computing(Microsoft Azure)",
-    "Advanced Cloud Computing(Amazon Web Server)",
-    "Advanced Digital Forensics",
-    "Advanced Ethical Hacking",
-    "Advanced Javascript",
-    "Advanced Machine Learning",
-    "Advanced Programming with python",
-  ];
+  Rx<List<QuizTwoSkillList>> selectedCourseSecond = Rx<List<QuizTwoSkillList>>([]);
 
-  Rx<List<String>> searchCourseSecond = Rx<List<String>>([]);
+  Rx<String> selectedParentSkillId = Rx<String>("");
 
-  Rx<List<String>> selectedCourseSecond = Rx<List<String>>([]);
+  Rx<List<QuizTwoSkillList>> getQuizTwoList = Rx<List<QuizTwoSkillList>>([]);
 
-  Rx<String> roleInstructorSecond = Rx<String>("");
-
+  Rx<List<String>> quizTwoSelectedSkills = Rx<List<String>>([]);
 
   @override
   void onInit() {
     super.onInit();
-    searchCourseSecond.value = courseItemsSecond;
-    roleInstructorSecond.value = "${Get.arguments}";
-    print("Second List");
-    print("${Get.arguments}");
+    selectedParentSkillId.value = Get.arguments;
+    print(selectedParentSkillId.value);
+    //searchCourseSecond.value = courseItemsSecond;
+    getQuizTwoSkillList();
   }
 
   @override
@@ -53,27 +37,55 @@ class SecondListController extends GetxController{
     super.onClose();
   }
 
+  void getQuizTwoSkillList() async {
+    GraphQLClient _client = graphqlProviderClass.clientToQuery();
+    QueryResult result = await _client.query(
+      QueryOptions(
+        document: gql(MutationQuery().getQuizSecondSkillList),
+        variables: {
+          "coreSkillId": selectedParentSkillId.value.toString(),
+        },
+      ),
+    );
+    if(!result.hasException){
+      print(result.toString());
+      print(result.data.toString());
+      var skillList = result.data!["getAllChildSkill"]["allChildSkillRes"];
+      for(int i=0; i<skillList.length; i++){
+        getQuizTwoList.value.add(
+          QuizTwoSkillList(
+            skillList[i]["code"],
+            skillList[i]["_id"],
+            skillList[i]["type"],
+            skillList[i]["childSkillName"],
+          ),
+        );
+      }
+      searchCourseSecond.value = getQuizTwoList.value;
+    }
+  }
+
 
   void searchSecondListCourse(String courseTitle) {
-    List<String> resultCourse = [];
+    List<QuizTwoSkillList> resultCourse = [];
     if (courseTitle.isEmpty) {
-      resultCourse = courseItemsSecond;
+      resultCourse = getQuizTwoList.value;
     } else {
-      resultCourse = courseItemsSecond
-          .where((element) => element
+      resultCourse = getQuizTwoList.value
+          .where((element) => element.childSkillName
           .toLowerCase()
           .contains(courseTitle.toLowerCase()))
           .toList();
     }
     searchCourseSecond.value = resultCourse;
   }
-  List<String> resultSelected = [];
-  void selectedSecondListCourse(String CourseSelected){
+
+
+  List<QuizTwoSkillList> resultSelected = [];
+  void selectedSecondListCourse(QuizTwoSkillList CourseSelected){
     if(resultSelected.contains(CourseSelected)){
       resultSelected.remove(CourseSelected);
-    } /*else if(resultSelected.length == 4){
-      resultSelected = resultSelected;
-    }*/ else {
+    } else {
       resultSelected.add(CourseSelected);
     }
     resultSelected = resultSelected;
@@ -81,7 +93,7 @@ class SecondListController extends GetxController{
     selectedCourseSecond.refresh();
   }
 
-  bool selectToChangeColour(String CourseColorChange){
+  bool selectToChangeColour(QuizTwoSkillList CourseColorChange){
     if(selectedCourseSecond.value.contains(CourseColorChange)){
       return true;
     } else{
@@ -89,7 +101,7 @@ class SecondListController extends GetxController{
     }
   }
 
-  void removeFromBottomSheetList(String CourseRemove){
+  void removeFromBottomSheetList(QuizTwoSkillList CourseRemove){
     selectedCourseSecond.value.remove(CourseRemove);
     selectedCourseSecond.value = selectedCourseSecond.value;
     selectedCourseSecond.refresh();
@@ -100,9 +112,17 @@ class SecondListController extends GetxController{
       Get.snackbar("Error", "Please select the course",snackPosition: SnackPosition.BOTTOM);
     }
     else{
+      getSelectedSecondSkillList();
       Get.toNamed(
-        RoutesConstant.getRouteDashBoardPage(),
-      arguments: roleInstructorSecond.value.toString(),);
+        RoutesConstant.getRouteDashBoardPage(),);
+      quizTwoSelectedSkills.value.clear();
     }
+  }
+
+  void getSelectedSecondSkillList(){
+    for(int i=0; i<selectedCourseSecond.value.length; i++){
+      quizTwoSelectedSkills.value.add(selectedCourseSecond.value[i].childSkillName);
+    }
+    print(quizTwoSelectedSkills.value.toString());
   }
 }

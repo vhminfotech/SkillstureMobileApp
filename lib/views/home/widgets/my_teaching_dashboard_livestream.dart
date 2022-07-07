@@ -17,8 +17,8 @@ class MyTeachingDashboardLivestream extends StatelessWidget {
             color: Colors.blueGrey.shade200,
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           ),
-          width: 140,
-          height: 90,
+          width: 125,
+          height: 85,
         ),
         SizedBox(width: 15,),
         Expanded(
@@ -53,8 +53,10 @@ class MyTeachingDashboardLivestream extends StatelessWidget {
                     ),
                     Text(
                       "18 May 2022 8:30pm",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                       style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 12,
                           color: Color(0xFF262261),
                           fontFamily: "Comfortaa-Regular"),
                     ),
