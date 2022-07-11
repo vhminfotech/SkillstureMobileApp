@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:skillsture_project/controllers/auth/instructor/instructor_register_third_controller.dart';
-
 import '../../../constants/constants_utils.dart';
 import '../../../controllers/graphqlconfigs/mutation_query.dart';
 import '../../../controllers/navigation/routes_constant.dart';
@@ -54,7 +53,6 @@ class RegisterInstructorThirdScreen
             print(resultData["uploadFile"]["uri"]);
             controller.certification =
                 resultData["uploadFile"]["uri"].toString();
-
             print(resultData.toString());
           }
         },
@@ -513,7 +511,7 @@ class RegisterInstructorThirdScreen
         child: FlatButton(
           padding: const EdgeInsets.all(10),
           onPressed: () {
-            Get.toNamed(RoutesConstant.getRouteLogin());
+            Get.offAllNamed(RoutesConstant.getRouteLogin());
           },
           child: RichText(
             text: const TextSpan(

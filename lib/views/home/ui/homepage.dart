@@ -412,8 +412,7 @@ class HomePageScreen extends GetView<HomePageController>{
           ),
           GestureDetector(
             onTap: () {
-              controller.loginDetailsRemoved();
-              Get.toNamed(RoutesConstant.getRouteLogin());
+
             },
             child: Image.asset(
               'assets/images/home_bell@2x.png',

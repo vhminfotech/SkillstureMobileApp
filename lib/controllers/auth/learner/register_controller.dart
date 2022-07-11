@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
@@ -11,6 +12,7 @@ import '../../navigation/routes_constant.dart';
 class RegisterController extends GetxController {
 
   GlobalKey<FormState> registerKey = GlobalKey<FormState>();
+  final registerData = GetStorage();
 
   late TextEditingController nameController,
       emailController,
@@ -65,11 +67,11 @@ class RegisterController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    nameController.dispose();
-    emailController.dispose();
-    mobileController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
+    nameController.clear();
+    emailController.clear();
+    mobileController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
   }
 
   bool isPasswordToggle() {
@@ -218,7 +220,7 @@ class RegisterController extends GetxController {
       );
 
       await FirebaseAuth.instance.signInWithCredential(credential);
-      FullScreenDialog.cancelDialog();
+     // FullScreenDialog.cancelDialog();
 /*      Get.toNamed(
         RoutesConstant.getRouteHomePage(),
       );*/
@@ -235,8 +237,7 @@ class RegisterController extends GetxController {
 
   void facebookSignUpPressed(RunMutation runMutation) async {
     final LoginResult loginResult = await FacebookAuth.instance.login();
-
-    //FullScreenDialog.showDialog();
+    FullScreenDialog.showDialog();
 
     /*try {*/
       final OAuthCredential facebookAuthCredential =
@@ -273,5 +274,12 @@ class RegisterController extends GetxController {
         RoutesConstant.getRouteLogin(),
       );
     }*/
+  }
+
+  void registerDetailsStorage() {
+    registerData.write("isLogged", true);
+    registerData.write("role", registerRole.value);
+    registerData.write("userId", registerUserId.value);
+    registerData.write("loginToken", registerToken.value);
   }
 }

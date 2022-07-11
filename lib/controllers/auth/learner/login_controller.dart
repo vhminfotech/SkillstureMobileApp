@@ -7,11 +7,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 import '../../../views/custom_widgets/fullScreenDialog.dart';
+import '../../graphqlconfigs/graphql_provider.dart';
+import '../../graphqlconfigs/mutation_query.dart';
 
 
 class LoginController extends GetxController {
 
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+  final GraphqlProviderClass graphqlProviderClass = GraphqlProviderClass();
+  //late GraphQLClient _client;
 
   late TextEditingController emailController,
       passwordController;
@@ -33,6 +37,7 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    //_client = graphqlProviderClass.clientToQuery();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     passwordVisible.value = true;
@@ -46,8 +51,8 @@ class LoginController extends GetxController {
   @override
   void onClose(){
     super.onClose();
-    emailController.dispose();
-    passwordController.dispose();
+    emailController.clear();
+    passwordController.clear();
   }
 
   void loginDetailsStorage(){
@@ -81,9 +86,6 @@ class LoginController extends GetxController {
     final isValidated = loginKey.currentState!.validate();
     if (isValidated) {
         loginKey.currentState!.save();
-
-        print(email);
-        print(password);
         FullScreenDialog.showDialog();
         runMutation(
           {
@@ -91,6 +93,7 @@ class LoginController extends GetxController {
             "password": password
           },
         );
+
     }
   }
 
@@ -98,66 +101,47 @@ class LoginController extends GetxController {
     // TODO: Add loading stage while google nd facebook auth.
     final googleUser = await GoogleSignIn(scopes: <String>['email']).signIn();
     FullScreenDialog.showDialog();
-
       final googleAuth = await googleUser?.authentication;
-
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      print("Google Access Token");
-      print(googleAuth?.accessToken);
-
       googleAccessToken.value = googleAuth!.accessToken.toString();
-
       runMutation(
         {
           "accessToken": googleAccessToken.value,
         },
       );
-
       await FirebaseAuth.instance.signInWithCredential(credential);
-     //FullScreenDialog.cancelDialog();
-
   }
 
   void facebookLoginPressed(RunMutation runMutation) async {
     final LoginResult loginResult = await FacebookAuth.instance.login();
-    //FullScreenDialog.showDialog();
-
-    /*try {*/
       final OAuthCredential facebookAuthCredential =
       FacebookAuthProvider.credential(loginResult.accessToken!.token);
       if (facebookAuthCredential.accessToken == null) {
-        //FullScreenDialog.cancelDialog();
         Get.back();
       } else {
-
-        print("Facebook Access Token");
-        print(loginResult.accessToken!.token);
-
         facebookAccessToken.value = loginResult.accessToken!.token.toString();
-
         runMutation(
           {
             "accessToken": facebookAccessToken.value,
           },
         );
-
         await FirebaseAuth.instance
             .signInWithCredential(facebookAuthCredential);
-        //FullScreenDialog.cancelDialog();
-
       }
-    /*} catch (e) {
-      print(e.toString());
-      //FullScreenDialog.cancelDialog();
-      Get.snackbar("Exception", e.toString(),
-          snackPosition: SnackPosition.BOTTOM);
-      Get.toNamed(
-        RoutesConstant.getRouteLogin(),
-      );
-    }*/
   }
 
+/*   Future<QueryResult<Object?>> loginDemo(String email, String password) async {
+    print("@@@!!!!@@@@!!!!");
+    var result = await _client.mutate(
+      MutationOptions(
+        document: gql(MutationQuery().login(email, password)),
+      ),
+    );
+    getLoginData = result as Type;
+    print(result);
+    return result;
+  }*/
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../controllers/course_list/first_list_controller.dart';
-import '../../../controllers/navigation/routes_constant.dart';
 import '../../../models/quiz_one_skill_list.dart';
 
 class FirstCourseListScreen extends GetView<FirstListController> {

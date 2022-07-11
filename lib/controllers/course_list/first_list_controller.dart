@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import '../../models/quiz_one_skill_list.dart';
+import '../../models/selected_quiz_list.dart';
 import '../graphqlconfigs/graphql_provider.dart';
 import '../graphqlconfigs/mutation_query.dart';
 import '../navigation/routes_constant.dart';
@@ -16,7 +17,7 @@ class FirstListController extends GetxController {
 
   Rx<List<QuizOneSkillList>> getQuizOneList = Rx<List<QuizOneSkillList>>([]);
 
-  Rx<List<String>> quizOneSelectedSkill = Rx<List<String>>([]);
+  Rx<List<SelectedQuizList>> quizOneSelectedSkill = Rx<List<SelectedQuizList>>([]);
 
 
   @override
@@ -58,6 +59,14 @@ class FirstListController extends GetxController {
         );
       }
       searchCourse.value = getQuizOneList.value;
+    } else if (result.exception!.linkException != null){
+      print("!!!!!!!@@@@@@@@@@@@@");
+      print(result.exception!.linkException);
+      Get.snackbar("Error", "Please connect to internet",snackPosition: SnackPosition.BOTTOM);
+    } else if (result.exception!.graphqlErrors == true){
+      print("!!!!!!!@@@@@@@@@@@@@");
+      print(result.exception!.graphqlErrors);
+      Get.snackbar("Error", "Something went wrong",snackPosition: SnackPosition.BOTTOM);
     }
   }
 
@@ -106,16 +115,25 @@ class FirstListController extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     } else {
       getSelectedSkillList();
+      print(quizOneSelectedSkill.value[0].skillId);
       Get.toNamed(RoutesConstant.getRouteSecondCourseList(),
-      arguments: selectedSkillId.value);
+      arguments:[{"skillId": quizOneSelectedSkill.value[0].skillId},
+        {"skillName": quizOneSelectedSkill.value[0].skillsName}]);
       quizOneSelectedSkill.value.clear();
     }
   }
 
   void getSelectedSkillList(){
     for(int i=0; i<selectedCourse.value.length; i++){
-      quizOneSelectedSkill.value.add(selectedCourse.value[i].skillName);
+      quizOneSelectedSkill.value.add(
+          SelectedQuizList(
+              selectedCourse.value[i].skillName,
+              selectedCourse.value[i].skillId,
+          ),
+      );
     }
-    print(quizOneSelectedSkill.value.toString());
+    print("******");
+    print(quizOneSelectedSkill.value[0].skillId);
+    print(quizOneSelectedSkill.value[0].skillsName);
   }
 }

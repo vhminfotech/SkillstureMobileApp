@@ -52,15 +52,10 @@ class RegisterScreen extends GetView<RegisterController> {
             return;
           } else {
             print("Registered Token");
-            print("!!!!!!!!!!!!!!!!");
-            print(resultData["data"]);
-            print("!!!!!!!!!!!!!!!!^^^^^^^");
-            print(resultData["signupUser"]["role"]);
-            print(resultData["signupUser"]["token"]);
-            print(resultData["signupUser"]["userId"]);
             controller.registerUserId.value = resultData["signupUser"]["userId"].toString();
             controller.registerRole.value = resultData["signupUser"]["role"].toString();
             controller.registerToken.value = resultData["signupUser"]["token"].toString();
+            controller.registerDetailsStorage();
             Get.offNamed(
               RoutesConstant.getRouteFirstCourseList(),
             );
@@ -69,15 +64,12 @@ class RegisterScreen extends GetView<RegisterController> {
         onError: (errorData) {
           FullScreenDialog.cancelDialog();
           if(errorData!.linkException == null){
-            print("Registered Error: $errorData");
             Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
                 snackPosition: SnackPosition.BOTTOM);
           }else if(errorData.linkException != null) {
-            print("Registered Error: $errorData");
           Get.snackbar("Error", "Please check your connection",
               snackPosition: SnackPosition.BOTTOM);
           } else{
-            print("Registered Error: $errorData");
           Get.snackbar("Error", "Registration Failed",
               snackPosition: SnackPosition.BOTTOM);
           }
@@ -298,7 +290,7 @@ class RegisterScreen extends GetView<RegisterController> {
         child: FlatButton(
           padding: const EdgeInsets.all(10),
           onPressed: () {
-            Get.toNamed(
+            Get.offAllNamed(
               RoutesConstant.getRouteLogin(),
             );
           },

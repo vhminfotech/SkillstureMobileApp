@@ -369,8 +369,14 @@ class LoginScreen extends GetView<LoginController> {
 /*            Get.toNamed(
               RoutesConstant.getRouteForgotPassword(),
             );*/
+
+/*            controller.loginDemo("google@gmail.com", "pass123456");
+            QueryResult result = controller.getLoginData as QueryResult<Object?>;
+            Future.delayed(Duration(seconds: 5), () {
+              print("result:: $result" );
+            });*/
             Get.toNamed(
-              RoutesConstant.getRouteFirstCourseList(),
+              RoutesConstant.getRouteDashBoardPage(),
             );
           },
           child: Text(

@@ -2,6 +2,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:skillsture_project/controllers/more/more_page_controller.dart';
 
+import '../../constants/more_page_navigation_list.dart';
+import '../../controllers/navigation/routes_constant.dart';
+
 class MorePageScreen extends GetView<MorePageController> {
   @override
   Widget build(BuildContext context) {
@@ -11,12 +14,74 @@ class MorePageScreen extends GetView<MorePageController> {
           child: Column(
             children: [
               _headerImage(),
+              if (controller.subscriptionPlan.value == "Expired") _getSubscriptionView(),
               _getMoreListView(),
               _getLogoutButton(),
               _getAppNameView(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _getSubscriptionView() {
+    return Container(
+      color: Color(0xFFF4F3FF),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Join Our Membership",
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF262261),
+                      fontFamily: "Cocogoose-Regular"),
+                ),
+                SizedBox(height: 10,),
+                Text(
+                  "Enjoy unlimited skills & livestream",
+                  style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Color(0xFF262261),
+                      fontFamily: "Comfortaa-Regular"),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: RaisedButton(
+                  color: const Color(0xFFF05A28),
+                  textColor: Colors.white,
+                  onPressed: () {
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 15.0,bottom: 15,),
+                    child: const Text(
+                      "Renew Now",
+                      style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Comfortaa-Bold"),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -30,8 +95,8 @@ class MorePageScreen extends GetView<MorePageController> {
           final skillItem = controller.morePageItemList.value[index];
           return InkWell(
             onTap: () {
-              print(skillItem);
-              // Get.toNamed(RoutesConstant.getRouteExploreSkillDetails(),arguments:skillItem);
+              print(skillItem.title);
+              Get.toNamed(MorePageNavigationList[index]);
             },
             child: ListTile(
               minLeadingWidth: 0,
@@ -73,7 +138,7 @@ class MorePageScreen extends GetView<MorePageController> {
     return Padding(
       padding: EdgeInsets.only(left: 40.0,right: 40, top: 30, bottom: 30),
       child: Text(
-        "Skillture v1.0.1",
+        "Skillsture v1.0.1",
         style: TextStyle(
             color: Color(0xFF707070),
             fontSize: 16.0,
@@ -91,7 +156,8 @@ class MorePageScreen extends GetView<MorePageController> {
         color: Colors.white,
         elevation: 1.0,
         onPressed: () {
-          Get.back();
+          controller.loginDetailsRemoved();
+          Get.offAllNamed(RoutesConstant.getRouteLogin());
         },
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -115,10 +181,10 @@ class MorePageScreen extends GetView<MorePageController> {
       children: [
         Container(
           width: double.infinity,
-          height: 200,
+          height: 180,
           color: const Color(0xFF262261),
           child: Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.topRight,
             child: Image.asset(
               'assets/images/background-illustration-more1@2x.png',
             ),
@@ -130,9 +196,36 @@ class MorePageScreen extends GetView<MorePageController> {
           child: Row(
             children: [
               Container(
-                child: CircleAvatar(
-                  maxRadius: 40,
-                  backgroundColor: Color(0xFFD6DE23),
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      maxRadius: 40,
+                      backgroundColor: Color(0xFFD6DE23),
+                      child: Center(
+                          child: Text('JD',style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25.0,
+                              fontFamily: "Comfortaa-Bold"),),
+                      ),
+                    ),
+                    Positioned(
+                        top: 0.0,
+                        right: 0.0,
+                        child:Stack(
+                          children: <Widget>[
+                            CircleAvatar(
+                              maxRadius: 15,
+                              backgroundColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Image.asset(
+                                  'assets/images/premium@2x.png',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),),
+                  ],
                 ),
               ),
               SizedBox(width: 20,),
@@ -146,7 +239,7 @@ class MorePageScreen extends GetView<MorePageController> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 25.0,
+                          fontSize: 27.0,
                           fontFamily: "Comfortaa-Bold"),
                     ),
                     SizedBox(height: 20,),
@@ -155,7 +248,7 @@ class MorePageScreen extends GetView<MorePageController> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: 15.0,
                           fontFamily: "Comfortaa-Regular"),
                     ),
                     SizedBox(height: 10,),
@@ -164,7 +257,7 @@ class MorePageScreen extends GetView<MorePageController> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: 15.0,
                           fontFamily: "Comfortaa-Regular"),
                     ),
                   ],
@@ -172,9 +265,21 @@ class MorePageScreen extends GetView<MorePageController> {
               ),
               Expanded(
                 child: Container(
-                  height: 20,
-                  color: Colors.blue,
-                  child: Text("Active"),
+                  decoration: BoxDecoration(
+                    color: (controller.subscriptionPlan.value == "Active") ? Colors.blue : Colors.redAccent,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40.0),
+                        bottomLeft: Radius.circular(40.0),
+                    ),
+                  ),
+                  height: 30,
+                  child: Center(
+                    child: Text(controller.subscriptionPlan.value,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontFamily: "Comfortaa-Regular"),),
+                  ),
                 ),
               ),
             ],

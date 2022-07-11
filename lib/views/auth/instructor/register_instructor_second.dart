@@ -8,9 +8,6 @@ import '../../custom_widgets/header_image.dart';
 
 class RegisterInstructorSecondScreen
     extends GetView<InstructorRegisterSecondController> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -42,7 +39,7 @@ class RegisterInstructorSecondScreen
         child: FlatButton(
           padding: const EdgeInsets.all(10),
           onPressed: () {
-            Get.toNamed(RoutesConstant.getRouteLogin());
+            Get.offAllNamed(RoutesConstant.getRouteLogin());
           },
           child: RichText(
             text: const TextSpan(

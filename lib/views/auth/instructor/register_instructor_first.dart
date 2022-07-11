@@ -102,7 +102,7 @@ class RegisterInstructorFirstScreen extends GetView<InstructorRegisterFirstContr
         child: FlatButton(
           padding: const EdgeInsets.all(10),
           onPressed: () {
-            Get.offNamed(RoutesConstant.getRouteLogin());
+            Get.offAllNamed(RoutesConstant.getRouteLogin());
           },
           child: RichText(
             text: const TextSpan(

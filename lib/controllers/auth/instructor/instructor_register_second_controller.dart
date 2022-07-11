@@ -60,9 +60,9 @@ class InstructorRegisterSecondController extends GetxController{
   @override
   void onClose() {
     super.onClose();
-    typeController.dispose();
-    regNumberController.dispose();
-    websiteController.dispose();
+    typeController.clear();
+    regNumberController.clear();
+    websiteController.clear();
   }
 
 

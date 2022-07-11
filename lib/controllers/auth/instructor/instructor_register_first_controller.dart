@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:skillsture_project/constants/constants_utils.dart';
-
 import '../../navigation/routes_constant.dart';
 
 class InstructorRegisterFirstController extends GetxController {
@@ -58,7 +56,13 @@ class InstructorRegisterFirstController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-
+    nameController.clear();
+    emailController.clear();
+    mobileController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
+    addressController.clear();
+    socialProfileController.clear();
   }
 
   bool isPasswordToggle() {

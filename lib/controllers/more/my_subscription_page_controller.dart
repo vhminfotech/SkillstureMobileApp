@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
-class HomePageController extends GetxController {
-
+class MySubscriptionPageController extends GetxController{
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +15,4 @@ class HomePageController extends GetxController {
   void onClose(){
     super.onClose();
   }
-
 }

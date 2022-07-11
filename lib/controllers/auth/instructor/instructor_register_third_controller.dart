@@ -32,7 +32,6 @@ class InstructorRegisterThirdController extends GetxController {
   final isAgree = Rx<bool>(false);
 
   Rx<List<String>> areaValues = Rx<List<String>>([]);
-
   Rx<List<String>> teachingAreas = Rx<List<String>>([]);
   Rx<List<Widget>> widgetItemList = Rx<List<Widget>>([]);
 
@@ -43,23 +42,9 @@ class InstructorRegisterThirdController extends GetxController {
   final registerToken = Rx<String>("");
 
   final registerData = GetStorage();
-
   late File certificateFile;
 
   Rx<List<String>> selectedBottomSheetSkills = Rx<List<String>>([]);
-
-/*  final List<String> skillsList = [
-    "Accounting",
-    "Adobe Suites",
-    "Advertising and Marketing",
-    "Agile Business Analysis",
-    "B2B Sales",
-    "Computer & Technology",
-    "Creative Thinking",
-    "Digital Marketing",
-    "Ethical Hacking",
-  ];*/
-
   Rx<List<InstructorSkill>> getAddSkills = Rx<List<InstructorSkill>>([]);
   Rx<List<String>> getAddSkillsNew = Rx<List<String>>([]);
 
@@ -70,7 +55,6 @@ class InstructorRegisterThirdController extends GetxController {
     introductionController = TextEditingController();
     experienceController = TextEditingController();
     isAgree.value = false;
-    //selectedBottomSheetSkills.value = skillsList;
     name.value = Get.arguments[0]["name"];
     email.value = Get.arguments[1]["email"];
     mobile.value = Get.arguments[2]["mobile"];
@@ -90,8 +74,8 @@ class InstructorRegisterThirdController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    introductionController.dispose();
-    experienceController.dispose();
+    introductionController.clear();
+    experienceController.clear();
   }
 
   void getSkillList() async {

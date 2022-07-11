@@ -135,6 +135,13 @@ flutter:
     - assets/images/star@2x_empty.png
     - assets/images/star@2x_full.png
     - assets/images/star@2x_half.png
+    - assets/images/premium@2x.png
+    - assets/images/icon_my_subscription.png
+    - assets/images/icon_info.png
+    - assets/images/icon_help_center.png
+    - assets/images/icon_edit_profile.png
+    - assets/images/icon_change_password.png
+    - assets/images/user@2x.png
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
