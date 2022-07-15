@@ -226,20 +226,4 @@ class MutationQuery {
   }
   """;
 
-
-/*  String login(String emailId, String passwordId) {
-   return """
-  mutation{
-  login(
-      email: "$emailId",
-    password: "$passwordId"
-  ){
-      userId,
-      role,
-      token
-    }
-  }
-  """;
-  }*/
-
 }

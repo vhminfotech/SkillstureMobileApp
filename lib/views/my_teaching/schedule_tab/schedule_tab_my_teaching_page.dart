@@ -404,7 +404,7 @@ class ScheduleTabMyTeachingPageScreen
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderRadius: BorderRadius.all(Radius.circular(15),),
             borderSide: BorderSide(
               color: Color(0xFF262261),
               width: 1,

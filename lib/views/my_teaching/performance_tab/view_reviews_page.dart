@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:skillsture_project/controllers/my_teaching/performance_view_reviews_controller.dart';
-
-import '../../home/widgets/my_teaching_payout_tab_list.dart';
 import '../../home/widgets/my_teaching_performance_review.dart';
 
 class ViewReviewsPageScreen extends GetView<PerformanceViewReviewsController> {

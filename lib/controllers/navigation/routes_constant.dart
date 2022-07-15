@@ -16,6 +16,7 @@ import 'package:skillsture_project/views/auth/instructor/register_instructor_thi
 import 'package:skillsture_project/views/explore_skills/explore_skill_details_screen.dart';
 import 'package:skillsture_project/views/explore_skills/explore_skill_screen.dart';
 import 'package:skillsture_project/splash.dart';
+import 'package:skillsture_project/views/home/ui/notification_page.dart';
 import 'package:skillsture_project/views/more/edit_profile_page.dart';
 import 'package:skillsture_project/views/more/more_page.dart';
 import 'package:skillsture_project/views/more/my_subscription_page.dart';
@@ -29,6 +30,7 @@ import '../../models/bindings/edit_page_binding.dart';
 import '../../models/bindings/explore_skill_binding.dart';
 import '../../models/bindings/instructor_register_second_binding.dart';
 import '../../models/bindings/my_subscription_binding.dart';
+import '../../models/bindings/notification_page_binding.dart';
 import '../../models/bindings/register_binding.dart';
 import '../../models/bindings/second_course_list_binding.dart';
 import '../../views/auth/learner/check_your_mail.dart';
@@ -37,7 +39,7 @@ import '../../views/auth/learner/login.dart';
 import '../../views/auth/learner/register.dart';
 import '../../views/course_list/ui/first_course_list.dart';
 import '../../views/course_list/ui/second_course_list.dart';
-import '../../views/home/ui/homepage.dart';
+import '../../views/home/ui/home_page.dart';
 
 class RoutesConstant {
   static String routeLaunch = "/";
@@ -63,6 +65,7 @@ class RoutesConstant {
   static String routeViewReviewsPage = "/routeViewReviewsPage";
   static String routeEditProfilePage = "/routeEditProfilePage";
   static String routeMySubscriptionPage = "/routeMySubscriptionPage";
+  static String routeNotificationPage = "/routeNotificationPage";
 
   static String getRouteLaunch() => routeLaunch;
 
@@ -110,6 +113,8 @@ class RoutesConstant {
   static String getRouteEditProfilePage() => routeEditProfilePage;
 
   static String getRouteMySubscriptionPage() => routeMySubscriptionPage;
+
+  static String getRouteNotificationPage() => routeNotificationPage;
 
   static List<GetPage> routes = [
     GetPage(
@@ -215,6 +220,11 @@ class RoutesConstant {
       name: routeMySubscriptionPage,
       page: () => MySubscriptionPage(),
       binding: MySubscriptionBinding(),
+    ),
+    GetPage(
+      name: routeNotificationPage,
+      page: () => NotificationPage(),
+      binding: NotificationPageBinding(),
     ),
   ];
 }

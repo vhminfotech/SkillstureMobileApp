@@ -117,6 +117,10 @@ class RegisterScreen extends GetView<RegisterController> {
             print("Registered Token @@@@@@@@@@@@@@@@");
             print(resultData.toString());
             print(resultData["googleSignup"]);
+            controller.registerUserId.value = resultData["googleSignup"]["userId"].toString();
+            controller.registerRole.value = resultData["googleSignup"]["role"].toString();
+            controller.registerToken.value = resultData["googleSignup"]["token"].toString();
+            controller.registerDetailsStorage();
             Get.offNamed(
               RoutesConstant.getRouteFirstCourseList(),
             );
@@ -194,6 +198,10 @@ class RegisterScreen extends GetView<RegisterController> {
           } else {
             print("Registered Token");
             print(resultData.toString());
+            controller.registerUserId.value = resultData["facebookSignup"]["userId"].toString();
+            controller.registerRole.value = resultData["facebookSignup"]["role"].toString();
+            controller.registerToken.value = resultData["facebookSignup"]["token"].toString();
+            controller.registerDetailsStorage();
             Get.offNamed(
               RoutesConstant.getRouteFirstCourseList(),
             );

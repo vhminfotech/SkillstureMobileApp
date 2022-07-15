@@ -6,6 +6,7 @@ class VideoListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           decoration: BoxDecoration(
@@ -14,7 +15,7 @@ class VideoListItem extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           ),
           height: 180,
-          width: 300,
+          width: 260,
           child: Container(
             margin: const EdgeInsets.only(left: 20),
             child: Align(
@@ -34,47 +35,68 @@ class VideoListItem extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 15,
+          height: 12,
         ),
-        Text(
-          "Fundamentals of being a Creative T...",
-          style: Utils.styleTextStyleVideoTitleListTextField(),
+        Container(
+          width: 260,
+          child: Text(
+            "Fundamentals of being a Creative Technology",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+                fontFamily: "Comfortaa-Medium"),
+          ),
         ),
         const SizedBox(
           height: 10,
         ),
-        Row(
-          children: [
-            Image.asset(
-              'assets/images/home_calendar@2x.png',
-              height: 15,
-              width: 15,
-              color: Colors.white,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              "18 May 2022 8:30pm",
-              style: Utils.styleTextStyleVideoListSubTitleTextField(),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Image.asset(
-              'assets/images/home_instructor@2x.png',
-              height: 15,
-              width: 15,
-              color: Colors.white,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              "John Doe",
-              style: Utils.styleTextStyleVideoListSubTitleTextField(),
-            ),
-          ],
+        Container(
+          width: 260,
+          child: Row(
+            children: [
+              Image.asset(
+                'assets/images/home_calendar@2x.png',
+                height: 14,
+                width: 14,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                "18 May 2022 8:30pm",
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    fontFamily: "Comfortaa-Regular"),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Image.asset(
+                'assets/images/home_instructor@2x.png',
+                height: 14,
+                width: 14,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                "John Doe",
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    fontFamily: "Comfortaa-Regular"),
+              ),
+            ],
+          ),
         ),
       ],
     );

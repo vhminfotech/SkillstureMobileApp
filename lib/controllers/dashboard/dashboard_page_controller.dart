@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:skillsture_project/views/home/ui/homepage.dart';
+import 'package:skillsture_project/views/home/ui/home_page.dart';
 import 'package:skillsture_project/views/more/more_page.dart';
 import 'package:skillsture_project/views/my_learning/my_learning_page.dart';
 import 'package:skillsture_project/views/my_teaching/dashboard_tab_my_teaching_page.dart';

@@ -24,7 +24,7 @@ class EditProfilePage extends GetView<EditProfilePageController> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.back();
+                                controller.sendBackProfilePic();
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 20.0),
@@ -77,7 +77,7 @@ class EditProfilePage extends GetView<EditProfilePageController> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.back();
+                                controller.sendBackProfilePic();
                               },
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 20.0),
@@ -204,9 +204,6 @@ class EditProfilePage extends GetView<EditProfilePageController> {
             _getStatusBottomSheet(),
             enableDrag: false,
           );
-          //controller.values.value.add(controller.teachingAreaController.text.toString());
-          /*controller
-              .addChipItem(controller.teachingAreaController.text.toString());*/
         },
         child: const Text(
           "Add",
@@ -433,12 +430,12 @@ class EditProfilePage extends GetView<EditProfilePageController> {
         decoration: ConstantUtils.styleInputDecoration("Experience"),
         keyboardType: TextInputType.text,
         controller: controller.experienceController,
-        onSaved: (value) {
+/*        onSaved: (value) {
           controller.experience = value!;
         },
         validator: (value) {
           return controller.validateTextFormFields(value!, "experience");
-        },
+        },*/
       ),
     );
   }

@@ -63,7 +63,7 @@ class WhatsNewItem extends StatelessWidget {
             RatingBar(
               ignoreGestures: true,
               itemSize: 25,
-              initialRating: 3,
+              initialRating: 4,
               minRating: 1,
               direction: Axis.horizontal,
               allowHalfRating: true,

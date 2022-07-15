@@ -56,7 +56,6 @@ class RevenueTabMyTeachingPageScreen
             ),
           ),
           scrollDirection: Axis.vertical,
-          //physics: NeverScrollableScrollPhysics(),
         ),
       ),
     );

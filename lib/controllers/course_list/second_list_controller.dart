@@ -128,11 +128,16 @@ class SecondListController extends GetxController {
 
   List<QuizTwoSkillList> resultSelected = [];
 
+
   void selectedSecondListCourse(QuizTwoSkillList CourseSelected) {
     if (resultSelected.contains(CourseSelected)) {
       resultSelected.remove(CourseSelected);
     } else {
-      resultSelected.add(CourseSelected);
+      if(resultSelected.length < 4){
+        resultSelected.add(CourseSelected);
+      }else{
+        Get.snackbar("Error", "You can select only four skills", snackPosition: SnackPosition.BOTTOM);
+      }
     }
     resultSelected = resultSelected;
     selectedCourseSecond.value = resultSelected;

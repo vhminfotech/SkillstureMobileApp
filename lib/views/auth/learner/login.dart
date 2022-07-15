@@ -23,7 +23,7 @@ class LoginScreen extends GetView<LoginController> {
                 _getEmailTextField(),
                 _getPasswordTextField(),
                 _getForgotPasswordButton(),
-                _getLoginMutation(),
+                _getLoginButton(),
                 _txtSignedInOption(),
                 _getSocialButton(),
                 _getAccountRegister(),
@@ -36,55 +36,8 @@ class LoginScreen extends GetView<LoginController> {
     );
   }
 
-  Widget _getLoginMutation() {
-    return Mutation(
-      options: MutationOptions(
-        document: gql(MutationQuery().loginUser),
-        onCompleted: (resultData) {
-          //FullScreenDialog.cancelDialog();
-          print("Login : $resultData");
-          if (resultData == null || resultData == "undefined") {
-            print("Login Failed");
-          } else {
-            print("Login Token");
-            print("@@@@@@@@@@@");
-            print(resultData["login"]);
-            print(resultData["login"]["userId"]);
-            print(resultData["login"]["role"].toString());
-            print(resultData["login"]["token"]);
-            controller.loginUserId.value = resultData["login"]["userId"].toString();
-            controller.loginRole.value = resultData["login"]["role"].toString();
-            controller.loginToken.value = resultData["login"]["token"].toString();
-            controller.loginDetailsStorage();
-            Get.offNamed(
-              RoutesConstant.getRouteDashBoardPage(),
-            );
-          }
-        },
-        onError: (errorData) {
-          FullScreenDialog.cancelDialog();
-          if(errorData!.linkException == null){
-            print("Login Error: $errorData");
-            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
-                snackPosition: SnackPosition.BOTTOM);
-          }else if(errorData.linkException != null) {
-            print("Login Error: $errorData");
-            Get.snackbar("Error", "Please check your connection",
-                snackPosition: SnackPosition.BOTTOM);
-          } else{
-            print("Login Error: $errorData");
-            Get.snackbar("Error", "Invalid Credentials",
-                snackPosition: SnackPosition.BOTTOM);
-          }
-        },
-      ),
-      builder: (runMutation, results) {
-        return _getLoginButton(runMutation);
-      },
-    );
-  }
 
-  Widget _getLoginButton(RunMutation runMutation) {
+  Widget _getLoginButton() {
     return Container(
       width: double.infinity,
       height: 50,
@@ -94,7 +47,7 @@ class LoginScreen extends GetView<LoginController> {
         textColor: Colors.white,
         elevation: 1.0,
         onPressed: () {
-          controller.checkLogin(runMutation);
+          controller.loginButtonPressed();
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7.5),
@@ -168,55 +121,14 @@ class LoginScreen extends GetView<LoginController> {
           ),
         ),
       );
-
-  Widget _getGoogleMutation() {
-    return Mutation(
-      options: MutationOptions(
-        document: gql(MutationQuery().registeredGoogleUser),
-        onCompleted: (resultData) {
-          FullScreenDialog.cancelDialog();
-          if (resultData == null || resultData == "undefined") {
-            print("Registered Failed");
-            return;
-          } else {
-            print("Login Token @@@@@@@@@@@@@@@@");
-            print(resultData.toString());
-            print(resultData["googleSignup"]["token"]);
-            Get.toNamed(
-              RoutesConstant.getRouteDashBoardPage(),
-            );
-          }
-        },
-        onError: (errorData) {
-          FullScreenDialog.cancelDialog();
-          if(errorData!.linkException == null){
-            print("Login Error: $errorData");
-            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
-                snackPosition: SnackPosition.BOTTOM);
-          }else if(errorData.linkException != null) {
-            print("Login Error: $errorData");
-            Get.snackbar("Error", "Please check your connection",
-                snackPosition: SnackPosition.BOTTOM);
-          } else{
-            print("Login Error: $errorData");
-            Get.snackbar("Error", "Invalid Credentials",
-                snackPosition: SnackPosition.BOTTOM);
-          }
-        },
-      ),
-      builder: (runMutation, results) {
-        return _googleButton(runMutation);
-      },
-    );
-  }
-
-  Widget _googleButton(RunMutation runMutation) {
+  
+  Widget _googleButton() {
     return RaisedButton(
       color: Colors.white,
       textColor: Colors.white,
       elevation: 1.0,
       onPressed: () {
-        controller.googleLoginPressed(runMutation);
+        controller.googleLoginPressed();
       },
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7.5),
@@ -241,51 +153,13 @@ class LoginScreen extends GetView<LoginController> {
     );
   }
 
-  Widget _getFacebookMutation() {
-    return Mutation(
-      options: MutationOptions(
-        document: gql(MutationQuery().registeredFacebookUser),
-        onCompleted: (dynamic resultData) {
-          if (resultData == null || resultData == "undefined") {
-            print("Login Failed");
-            return;
-          } else {
-            print("Login Token");
-            print(resultData.toString());
-            Get.toNamed(
-              RoutesConstant.getRouteDashBoardPage(),
-            );
-          }
-        },
-        onError: (dynamic errorData) {
-          if(errorData!.linkException == null){
-            print("Login Error: $errorData");
-            Get.snackbar("Error", errorData.graphqlErrors[0].message.toString(),
-                snackPosition: SnackPosition.BOTTOM);
-          }else if(errorData.linkException != null) {
-            print("Login Error: $errorData");
-            Get.snackbar("Error", "Please check your connection",
-                snackPosition: SnackPosition.BOTTOM);
-          } else{
-            print("Login Error: $errorData");
-            Get.snackbar("Error", "Invalid Credentials",
-                snackPosition: SnackPosition.BOTTOM);
-          }
-        },
-      ),
-      builder: (runMutation, results) {
-        return _facebookButton(runMutation);
-      },
-    );
-  }
-
-  Widget _facebookButton(RunMutation runMutation) {
+  Widget _facebookButton() {
     return RaisedButton(
       color: Colors.white,
       textColor: Colors.white,
       elevation: 1.0,
       onPressed: () {
-        controller.facebookLoginPressed(runMutation);
+        controller.facebookLoginPressed();
       },
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(7.5),
@@ -319,7 +193,7 @@ class LoginScreen extends GetView<LoginController> {
           Expanded(
             child: Container(
               height: 50,
-              child: _getGoogleMutation(),
+              child: _googleButton(),
             ),
           ),
           const SizedBox(
@@ -328,7 +202,7 @@ class LoginScreen extends GetView<LoginController> {
           Expanded(
             child: SizedBox(
               height: 50,
-              child: _getFacebookMutation(),
+              child: _facebookButton(),
             ),
           ),
         ],
@@ -366,17 +240,8 @@ class LoginScreen extends GetView<LoginController> {
       children: <Widget>[
         FlatButton(
           onPressed: () {
-/*            Get.toNamed(
-              RoutesConstant.getRouteForgotPassword(),
-            );*/
-
-/*            controller.loginDemo("google@gmail.com", "pass123456");
-            QueryResult result = controller.getLoginData as QueryResult<Object?>;
-            Future.delayed(Duration(seconds: 5), () {
-              print("result:: $result" );
-            });*/
             Get.toNamed(
-              RoutesConstant.getRouteDashBoardPage(),
+              RoutesConstant.getRouteForgotPassword(),
             );
           },
           child: Text(

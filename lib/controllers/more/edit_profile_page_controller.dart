@@ -115,7 +115,7 @@ class EditProfilePageController extends GetxController{
   }
 
 
-  String? validateName(String value) {
+/*  String? validateName(String value) {
     if (value.isEmpty) {
       return "Please enter a name";
     }
@@ -166,7 +166,7 @@ class EditProfilePageController extends GetxController{
       return "Please enter a ${field}";
     }
     return null;
-  }
+  }*/
 
   void checkedBottomSheetItem(String item){
     if (item.isEmpty){
@@ -338,5 +338,10 @@ class EditProfilePageController extends GetxController{
         print(queryResult.data);
         Get.snackbar("Success", "Profile Data Updated Successfully");
       }
+  }
+
+  void sendBackProfilePic(){
+    print(profilePicture.value);
+    Get.back(result: profilePicture.value);
   }
 }

@@ -52,7 +52,7 @@ class Utils {
 
   static TextStyle styleTextStyleVideoTitleListTextField() {
     return const TextStyle(
-        fontSize: 15,
+        fontSize: 13,
         fontWeight: FontWeight.bold,
         color: Colors.white,
         fontFamily: "Comfortaa-Regular");

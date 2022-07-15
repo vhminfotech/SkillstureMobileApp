@@ -53,7 +53,7 @@ class RecommendItem extends StatelessWidget {
         Row(
           children: [
             Text(
-              "4.0",
+              "3.0",
               style: Utils.styleTextStyleWhatsNewListSubTitleTextField(),
             ),
             const SizedBox(

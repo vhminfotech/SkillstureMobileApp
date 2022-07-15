@@ -284,67 +284,63 @@ class HomePageScreen extends GetView<HomePageController>{
     return Container(
       //color: Colors.blueGrey,
       color: const Color(0xFFF4F3FF),
-      padding: const EdgeInsets.only(top: 30, left: 20, right: 10),
-      height: 120,
-      width: double.infinity,
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20,bottom: 20),
+
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              Text(
-                "Learn in-demand skills",
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF262261),
-                    fontFamily: "Cocogoose-Regular"),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Explore Our 100 Skills",
-                style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    color: Color(0xFF262261),
-                    fontFamily: "Comfortaa-Regular"),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Text(
+                  "Learn in-demand skills",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Color(0xFF262261),
+                      fontFamily: "Cocogoose-Regular"),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Explore Our 100 Skills",
+                  style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.normal,
+                      color: Color(0xFF262261),
+                      fontFamily: "Comfortaa-Regular"),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             width: 10,
           ),
-          Expanded(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 50,
-                  width: 130,
-                  child: RaisedButton(
-                    color: const Color(0xFFF05A28),
-                    textColor: Colors.white,
-                    onPressed: () {
-                      Get.toNamed(
-                        RoutesConstant.getRouteExploreSkills(),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Text(
-                      "Explore Skills",
-                      style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Comfortaa-Bold"),
-                    ),
+          Column(
+            children: [
+              RaisedButton(
+                color: const Color(0xFFF05A28),
+                textColor: Colors.white,
+                onPressed: () {
+                  Get.toNamed(
+                    RoutesConstant.getRouteExploreSkills(),
+                  );
+                },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0,right: 10,top: 20,bottom: 20),
+                  child: const Text(
+                    "Explore Skills",
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontFamily: "Comfortaa-Bold"),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
@@ -412,7 +408,7 @@ class HomePageScreen extends GetView<HomePageController>{
           ),
           GestureDetector(
             onTap: () {
-
+              Get.toNamed(RoutesConstant.getRouteNotificationPage(),);
             },
             child: Image.asset(
               'assets/images/home_bell@2x.png',
