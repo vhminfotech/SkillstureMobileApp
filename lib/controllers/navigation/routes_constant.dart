@@ -8,22 +8,28 @@ import 'package:skillsture_project/models/bindings/instructor_register_third_bin
 import 'package:skillsture_project/models/bindings/login_binding.dart';
 import 'package:skillsture_project/models/bindings/more_page_binding.dart';
 import 'package:skillsture_project/models/bindings/performance_view_reviews_page_binding.dart';
+import 'package:skillsture_project/models/bindings/privacy_policy_binding.dart';
 import 'package:skillsture_project/models/bindings/schedule_livestream_detail_page_binding.dart';
-import 'package:skillsture_project/views/dashboard/dashboard_page.dart';
+import 'package:skillsture_project/models/bindings/terms_and_conditions_binding.dart';
+import 'package:skillsture_project/splash.dart';
 import 'package:skillsture_project/views/auth/instructor/register_instructor_first.dart';
 import 'package:skillsture_project/views/auth/instructor/register_instructor_second.dart';
 import 'package:skillsture_project/views/auth/instructor/register_instructor_third.dart';
+import 'package:skillsture_project/views/dashboard/dashboard_page.dart';
 import 'package:skillsture_project/views/explore_skills/explore_skill_details_screen.dart';
 import 'package:skillsture_project/views/explore_skills/explore_skill_screen.dart';
-import 'package:skillsture_project/splash.dart';
+import 'package:skillsture_project/views/more/change_password_page.dart';
 import 'package:skillsture_project/views/more/edit_profile_page.dart';
 import 'package:skillsture_project/views/more/more_page.dart';
 import 'package:skillsture_project/views/more/my_subscription_page.dart';
+import 'package:skillsture_project/views/more/terms_and_condition_page.dart';
 import 'package:skillsture_project/views/my_learning/my_learning_page.dart';
 import 'package:skillsture_project/views/my_teaching/dashboard_tab_my_teaching_page.dart';
 import 'package:skillsture_project/views/my_teaching/performance_tab/view_reviews_page.dart';
 import 'package:skillsture_project/views/my_teaching/schedule_tab/livestream_detail_page.dart';
 import 'package:skillsture_project/views/search/search_page.dart';
+
+import '../../models/bindings/change_password_binding.dart';
 import '../../models/bindings/dashboard_page_binding.dart';
 import '../../models/bindings/edit_page_binding.dart';
 import '../../models/bindings/explore_skill_binding.dart';
@@ -38,6 +44,7 @@ import '../../views/auth/learner/register.dart';
 import '../../views/course_list/ui/first_course_list.dart';
 import '../../views/course_list/ui/second_course_list.dart';
 import '../../views/home/ui/homepage.dart';
+import '../../views/more/privacy_policy_page.dart';
 
 class RoutesConstant {
   static String routeLaunch = "/";
@@ -63,6 +70,9 @@ class RoutesConstant {
   static String routeViewReviewsPage = "/routeViewReviewsPage";
   static String routeEditProfilePage = "/routeEditProfilePage";
   static String routeMySubscriptionPage = "/routeMySubscriptionPage";
+  static String routeTermsAndConditionsPage = "/routeTermsAndConditionsPage";
+  static String routePrivacyPolicyPage = "/routePrivacyPolicyPage";
+  static String routeChangePasswordPage = "/routeChangePasswordPage";
 
   static String getRouteLaunch() => routeLaunch;
 
@@ -110,6 +120,12 @@ class RoutesConstant {
   static String getRouteEditProfilePage() => routeEditProfilePage;
 
   static String getRouteMySubscriptionPage() => routeMySubscriptionPage;
+
+  static String getRouteTermsAndConditionsPage() => routeTermsAndConditionsPage;
+
+  static String getRoutePrivacyPolicyPage() => routePrivacyPolicyPage;
+
+  static String getRouteChangePasswordPage() => routeChangePasswordPage;
 
   static List<GetPage> routes = [
     GetPage(
@@ -215,6 +231,21 @@ class RoutesConstant {
       name: routeMySubscriptionPage,
       page: () => MySubscriptionPage(),
       binding: MySubscriptionBinding(),
+    ),
+    GetPage(
+      name: routeTermsAndConditionsPage,
+      page: () => TermsAndConditionPage(),
+      binding: TermsAndConditionsBinding(),
+    ),
+    GetPage(
+      name: routePrivacyPolicyPage,
+      page: () => PrivacyPolicyPage(),
+      binding: PrivacyPolicyPageBinding(),
+    ),
+    GetPage(
+      name: routeChangePasswordPage,
+      page: () => ChangePasswordPage(),
+      binding: ChangePasswordPageBinding(),
     ),
   ];
 }

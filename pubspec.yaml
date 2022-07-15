@@ -142,6 +142,10 @@ flutter:
     - assets/images/icon_edit_profile.png
     - assets/images/icon_change_password.png
     - assets/images/user@2x.png
+    - assets/images/ic_terms_condition.png
+    - assets/images/ic_social_twitter.png
+    - assets/images/ic_social_facebook.png
+    - assets/images/ic_social_youtube.png
     - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
