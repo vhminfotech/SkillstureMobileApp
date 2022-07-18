@@ -454,10 +454,7 @@ class SearchPageScreen extends GetView<SearchPageController> {
                         margin: EdgeInsets.only(right: 20),
                         child: OutlinedButton(
                           onPressed: () {
-/*                  Get.bottomSheet(
-                    _getBottomSheetView(),
-                    enableDrag: false,
-                  );*/
+                            controller.showCalender();
                           },
                           child: Row(
                             children: [

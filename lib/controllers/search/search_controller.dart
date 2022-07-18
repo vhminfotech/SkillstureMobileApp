@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../constants/performance_livestream_model_list.dart';
 import '../../constants/search_upcoming_model_list.dart';
@@ -5,6 +6,8 @@ import '../../models/performance_livestream_model.dart';
 import '../../models/search_upcoming_livestream_model.dart';
 
 class SearchPageController extends GetxController {
+  Rxn<DateTimeRange> selectRange =   Rxn<DateTimeRange>();
+
   Rx<List<TeachingPerformanceLiveStreamModel>> ongoingLivestreamList =
   Rx<List<TeachingPerformanceLiveStreamModel>>([]);
 
@@ -169,6 +172,26 @@ class SearchPageController extends GetxController {
     teachingAreas.value.clear();
     teachingAreas.value = teachingAreas.value;
     teachingAreas.refresh();
+  }
+
+  void showCalender() async {
+    final DateTimeRange? result = await showDateRangePicker(
+      context: Get.context!,
+      firstDate: DateTime(2000, 1, 1),
+      lastDate: DateTime(2100, 12, 31),
+      currentDate: DateTime.now(),
+      saveText: 'Done',
+    );
+
+    if (result != null) {
+      selectRange.value = result;
+      var startDate = result.start.toString().split(' ')[0];
+      var endDate = result.end.toString().split(' ')[0];
+      var dateRange = "$startDate - $endDate";
+      print(dateRange);
+      print(result.start.toString().split(' ')[0]);
+      print(result.end.toString().split(' ')[0]);
+    }
   }
 
 }
